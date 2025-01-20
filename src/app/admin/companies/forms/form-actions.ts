@@ -1,9 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { companyCreateFormSchema } from './zodSchemas';
-import { CreateCompanyFormData } from './interfaces';
-import { create, update } from '../../../db-operations/company';
+import { companyCreateFormSchema } from '../zodSchemas';
+import { CreateCompanyFormData } from '../interfaces';
+import { create, update } from '../../../../db-operations/company';
 
 
 export async function createCompany(formData: any) {

@@ -3,7 +3,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessa
 import { Company } from "../interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { updateCompany, createCompany } from "../form-actions";
+import { updateCompany, createCompany } from "./form-actions";
 import { companyCreateFormSchema } from "../zodSchemas";
 import React, { useActionState } from "react";
 import { Loader2 } from "lucide-react";
