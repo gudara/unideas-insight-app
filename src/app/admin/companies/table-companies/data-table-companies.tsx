@@ -4,6 +4,8 @@ import * as React from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
+  PaginationState,
+  PaginationTableState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -15,12 +17,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-
-
-
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DtCompaniesToolbar } from "./components/dt-companies-toolbar"
 import { DtCompaniesPagination } from "./components/dt-companies-pagination"
+import { useEffect } from "react"
 
 interface DataTableCompaniesProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -31,28 +31,26 @@ export function DataTableCompanies<TData, TValue>({
   columns,
   data,
 }: DataTableCompaniesProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  // const [rowSelection, setRowSelection] = React.useState({})
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [pagination, setPagination] = React.useState<PaginationState>({pageIndex: 0, pageSize: 10})
 
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
-      columnVisibility,
-      rowSelection,
       columnFilters,
+      pagination
     },
-    enableRowSelection: true,
-    onRowSelectionChange: setRowSelection,
+    enableRowSelection: false,
+    // onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -61,7 +59,10 @@ export function DataTableCompanies<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
-  
+  useEffect(() => {
+    console.log(sorting, columnFilters, pagination);
+    
+  }, [pagination])
 
   return (
     <div className="space-y-4">

@@ -17,7 +17,7 @@ export function DtCompaniesColumnHeader<TData, TValue>({
     column,
     title,
     className,
-    showHideOption: showHide
+    showHideOption
 }: DtCompaniesColumnHeaderProps<TData, TValue>) {
     if (!column.getCanSort()) {
         return <div className={cn(className)}>{title}</div>
@@ -52,7 +52,7 @@ export function DtCompaniesColumnHeader<TData, TValue>({
                         Desc
                     </DropdownMenuItem>
                     {
-                        showHide &&
+                        showHideOption &&
                         <>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
