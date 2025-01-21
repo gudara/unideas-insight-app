@@ -1,7 +1,7 @@
 'use client';
 
-import { Company } from '../interfaces';
 import { CompanyDraftForm } from '../forms/company-draft-form';
+import { Company } from '../interfaces';
 
 export default function CreateCompanyPage() {
     let company: Company | null = null;

@@ -4,7 +4,6 @@ import { CreateCompanyFormData } from "../app/admin/companies/interfaces";
 export async function create(data: CreateCompanyFormData, user: any){
 
   if (!data || typeof data !== 'object' || Array.isArray(data)) {
-    console.log('Invalid payload: expected an object' );
     return {
       error : "Data format error"
     }
@@ -40,7 +39,6 @@ export async function create(data: CreateCompanyFormData, user: any){
 export async function update(id: number, data: CreateCompanyFormData, user: any){
 
   if (!data || typeof data !== 'object' || Array.isArray(data)) {
-    console.log('Invalid payload: expected an object' );
     return {
       error : "Data format error"
     }

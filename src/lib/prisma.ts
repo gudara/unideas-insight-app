@@ -24,25 +24,25 @@ export function errorHandler(error: any): {error: string} {
         // Handle known errors such as unique constraint violations
         if (error.code === 'P2002') {
           // P2002 is a unique constraint violation error code
-          console.error('Unique constraint violation: ', error.meta);
+          // console.error('Unique constraint violation: ', error.meta);
           return {
             error : `Unique constraint violation: ${error.meta}`
           }
         } else {
-          console.error('Prisma error occurred:', error.message);
+          // console.error('Prisma error occurred:', error.message);
           return {
             error : `Prisma error occurred: ${error.message}`
           }
         }
       } else if (error instanceof PrismaClientValidationError) {
         // Handle validation errors (such as missing required fields)
-        console.error('Validation error occurred:', error.message);
+        // console.error('Validation error occurred:', error.message);
         return {
           error : `Validation error occurred: ${error.message}`
         }
       } else {
         // Catch any other error
-        console.error('Unexpected error occurred:', error);
+        // console.error('Unexpected error occurred:', error);
         return {
           error : `Validation error occurred: ${error}`
         }

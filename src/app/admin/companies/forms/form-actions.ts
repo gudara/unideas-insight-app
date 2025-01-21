@@ -36,7 +36,6 @@ export async function createCompany(formData: any) {
 
 
 export async function updateCompany(id: number, formData: any): Promise<any> {
-  console.log("Update method call")
   //TODO - need to implement authendication
 
   //check wether form data or not
