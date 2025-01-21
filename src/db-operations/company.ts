@@ -88,3 +88,8 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
     await prisma.$disconnect();
   }
 }
+
+
+export async function getCompanies(): Promise<any[]>{
+  return await prisma.company.findMany()
+}

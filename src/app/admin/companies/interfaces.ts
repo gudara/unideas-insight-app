@@ -1,10 +1,12 @@
+import { CompanyStatus } from '@prisma/client';
+
 export interface Company {
     id: number;
     name: string;
     contactPersonName: string;
     contactNumber: string;
     contactEmail: string;
-    status: 'Enable' | 'Disable';
+    status: CompanyStatus;
 }
 
 export interface CreateCompanyFormData {
