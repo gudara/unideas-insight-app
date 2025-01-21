@@ -1,5 +1,5 @@
 import prisma, { errorHandler } from '@/lib/prisma';
-import { CreateCompanyFormData } from "../app/admin/companies/interfaces";
+import { Company, CreateCompanyFormData } from "../app/admin/companies/interfaces";
 
 export async function create(data: CreateCompanyFormData, user: any){
 
@@ -90,6 +90,6 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
 }
 
 
-export async function getCompanies(): Promise<any[]>{
+export async function getCompanies(): Promise<Company[]>{
   return await prisma.company.findMany()
 }

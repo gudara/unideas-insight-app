@@ -3,9 +3,9 @@ import { CompanyStatus } from '@prisma/client';
 export interface Company {
     id: number;
     name: string;
-    contactPersonName: string;
+    contactPersonName?: string;
     contactNumber: string;
-    contactEmail: string;
+    contactEmail?: string;
     status: CompanyStatus;
 }
 

@@ -5,7 +5,6 @@ import { columns } from "./table-companies/components/dt-compaies-columns";
 
 export default async function CompaniesPage() {
     const items: Company[] = await getCompanies();
-
     return (
       <div className="container mx-auto py-10">
         <DataTableCompanies columns={columns} data={items} />

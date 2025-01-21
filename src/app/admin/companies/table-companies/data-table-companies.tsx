@@ -22,7 +22,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DtCompaniesToolbar } from "./components/dt-companies-toolbar"
 import { DtCompaniesPagination } from "./components/dt-companies-pagination"
 
-interface DataTableProps<TData, TValue> {
+interface DataTableCompaniesProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
@@ -30,7 +30,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTableCompanies<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableCompaniesProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -61,10 +61,12 @@ export function DataTableCompanies<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
+  
+
   return (
     <div className="space-y-4">
       <DtCompaniesToolbar table={table} />
-      <div className="rounded-md border">
+      <div className="">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
