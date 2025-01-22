@@ -3,16 +3,16 @@
 import { DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import { Table } from "@tanstack/react-table"
 import { Settings2 } from "lucide-react"
-import { DropdownMenu } from "../../../../../components/ui/dropdown-menu"
-import { Button } from "../../../../../components/ui/button"
+import { DropdownMenu } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 
-interface DataTableViewOptionsProps<TData> {
+interface DtCompaniesViewOptionsProps<TData> {
     table: Table<TData>
 }
 
-export function DataTableViewOptions<TData>({
+export function DtCompaniesViewOptions<TData>({
     table,
-}: DataTableViewOptionsProps<TData>) {
+}: DtCompaniesViewOptionsProps<TData>) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>

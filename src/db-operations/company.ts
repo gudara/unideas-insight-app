@@ -1,5 +1,7 @@
+'use server'
 import prisma, { errorHandler } from '@/lib/prisma';
-import { Company, CreateCompanyFormData } from "../app/admin/companies/interfaces";
+import { Company, CreateCompanyFormData } from "../lib/interfaces/company-interfaces";
+import { DataTableFilter } from '@/lib/interfaces/data-table-interfaces';
 
 export async function create(data: CreateCompanyFormData, user: any){
 
@@ -90,6 +92,31 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
 }
 
 
-export async function getCompanies(): Promise<Company[]>{
-  return await prisma.company.findMany()
+export async function getCompanies({sorting, columnFilters, pagination}: DataTableFilter): Promise<{total: number, data: Company[] , error?: string | null}>{
+  let skip = (typeof pagination?.pageIndex !== "undefined" || typeof pagination?.pageSize !== "undefined" ) ?  (+pagination.pageIndex * +pagination.pageSize) : 0;
+  let take = ( typeof pagination?.pageSize !== "undefined" ) ?  ( +pagination.pageSize) : 10;
+  
+  console.log(sorting, columnFilters, pagination)
+  let whereString = '{';
+  columnFilters?.map(item=>{
+    whereString = ` ${whereString} "${item.id}" : { "contains" : "${item.value}", "mode": "insensitive" }`;
+  })
+  whereString = `${whereString} }`;
+
+  console.log('whereString', whereString, JSON.parse(whereString))
+
+  try {
+    let total = await prisma.company.count({
+    });
+    let data = await prisma.company.findMany({
+      skip,
+      take,
+      where: JSON.parse(whereString)
+    });
+    return {data, total, error: null}
+  } catch (error) {
+    return {data: [], total: 0, error: errorHandler(error).error}
+  } finally {
+    await prisma.$disconnect();
+  }
 }

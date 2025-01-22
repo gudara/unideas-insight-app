@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from "@/components/ui/form";
-import { Company } from "../interfaces";
+import { Company } from "../../../../lib/interfaces/company-interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { updateCompany, createCompany } from "./form-actions";
@@ -36,10 +36,6 @@ export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
     let [state, dispatch, isPending] = useActionState(
         async (previous: undefined | StateType, payload: FormData) => {
             let result;
-            toast({
-                title: "Successfully Save",
-                description: "Company has created.",
-            })
             if (!!previous?.data?.id) {
                 result = await updateCompany(previous.data.id, payload)
             }
@@ -47,7 +43,8 @@ export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
                 result = await createCompany(payload)
             }
             return result;
-        }, { data: company });
+        }, { data: company }
+    );
 
     const action = async (formData: FormData) => {
         dispatch(formData);

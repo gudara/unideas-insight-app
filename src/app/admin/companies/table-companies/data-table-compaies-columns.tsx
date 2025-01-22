@@ -1,9 +1,9 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Company } from "../../interfaces";
-import { DtCompaniesColumnHeader } from "./dt-compaies-column-header";
-import { statuses } from "../meta-data";
+import { Company } from "@/lib/interfaces/company-interfaces";
+import { DtCompaniesColumnHeader } from "./components/dt-compaies-column-header";
+import { statuses } from "./meta-data";
 import { Mail, Phone } from "lucide-react";
 
 

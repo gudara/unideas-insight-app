@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -16,36 +15,47 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { DtCompaniesToolbar } from "./components/dt-companies-toolbar"
-import { DtCompaniesPagination } from "./components/dt-companies-pagination"
-import { useEffect } from "react"
+} from "@tanstack/react-table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DtCompaniesToolbar } from "./components/dt-companies-toolbar";
+import { DtCompaniesPagination } from "./components/dt-companies-pagination";
+import {  useEffect, useState } from "react";
+import { useQuery} from "@tanstack/react-query";
+import { Company } from "@/lib/interfaces/company-interfaces";
+import { DataTableFilter } from "@/lib/interfaces/data-table-interfaces";
+import { getCompanies } from "@/db-operations/company";
 
 interface DataTableCompaniesProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
 }
 
 export function DataTableCompanies<TData, TValue>({
   columns,
-  data,
 }: DataTableCompaniesProps<TData, TValue>) {
-  // const [rowSelection, setRowSelection] = React.useState({})
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [pagination, setPagination] = React.useState<PaginationState>({pageIndex: 0, pageSize: 10})
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
+  
+  const {data: queryData, isError, isLoading } = useQuery({
+    queryKey: ['companies', sorting, columnFilters, pagination],
+    queryFn: async () => {
+      return await getCompanies({sorting, columnFilters, pagination});
+    },
+    
+  })
 
   const table = useReactTable({
-    data,
-    columns,
+    data:  queryData?.data ?? [],
+    columns: columns,
     state: {
       sorting,
       columnFilters,
-      pagination
+      pagination,
     },
     enableRowSelection: false,
+    manualPagination: true, // Enable manual pagination
+    pageCount: +queryData?.total ? (Math.floor(queryData.total/pagination.pageSize) + (queryData.total%pagination.pageSize ? 1 : 0)) : 0,
     // onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -57,12 +67,12 @@ export function DataTableCompanies<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-  })
+  });
 
-  useEffect(() => {
-    console.log(sorting, columnFilters, pagination);
-    
-  }, [pagination])
+
+  // useEffect(() => {
+  //   console.log(sorting, columnFilters, pagination);
+  // }, [pagination])
 
   return (
     <div className="space-y-4">
@@ -87,9 +97,9 @@ export function DataTableCompanies<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody >
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows?.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
@@ -121,3 +131,5 @@ export function DataTableCompanies<TData, TValue>({
     </div>
   )
 }
+
+
