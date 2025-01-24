@@ -2,12 +2,18 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Company } from "@/lib/interfaces/company-interfaces";
-import { DtCompaniesColumnHeader } from "./components/dt-compaies-column-header";
+import { DtCompaniesColumnHeader } from "./components/dt-companies-column-header";
 import { statuses } from "./meta-data";
 import { Mail, Phone } from "lucide-react";
+import { DtCompaniesRowActions } from "./components/dt-companies-row-actions";
 
 
 export const columns: ColumnDef<Company>[] = [
+  
+  {
+    accessorKey: "id",
+    header:"Id",
+  },
   {
     accessorKey: "name",
     header: ({ column }) => (
@@ -96,5 +102,9 @@ export const columns: ColumnDef<Company>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <DtCompaniesRowActions row={row} />,
   },
 ]

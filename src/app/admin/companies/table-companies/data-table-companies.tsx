@@ -23,7 +23,7 @@ import {  useEffect, useState } from "react";
 import { useQuery} from "@tanstack/react-query";
 import { Company } from "@/lib/interfaces/company-interfaces";
 import { DataTableFilter } from "@/lib/interfaces/data-table-interfaces";
-import { getCompanies } from "@/db-operations/company";
+import { search } from "@/db-operations/company";
 
 interface DataTableCompaniesProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -40,7 +40,7 @@ export function DataTableCompanies<TData, TValue>({
   const {data: queryData, isError, isLoading } = useQuery({
     queryKey: ['companies', sorting, columnFilters, pagination],
     queryFn: async () => {
-      return await getCompanies({sorting, columnFilters, pagination});
+      return await search({sorting, columnFilters, pagination});
     },
     
   })
@@ -53,7 +53,13 @@ export function DataTableCompanies<TData, TValue>({
       columnFilters,
       pagination,
     },
+    initialState: {
+      columnVisibility: {
+        id: false, // Set 'id' column to be hidden initially
+      },
+    },
     enableRowSelection: false,
+    enableMultiSort: true,
     manualPagination: true, // Enable manual pagination
     pageCount: +queryData?.total ? (Math.floor(queryData.total/pagination.pageSize) + (queryData.total%pagination.pageSize ? 1 : 0)) : 0,
     // onRowSelectionChange: setRowSelection,
@@ -68,11 +74,6 @@ export function DataTableCompanies<TData, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
-
-
-  // useEffect(() => {
-  //   console.log(sorting, columnFilters, pagination);
-  // }, [pagination])
 
   return (
     <div className="space-y-4">

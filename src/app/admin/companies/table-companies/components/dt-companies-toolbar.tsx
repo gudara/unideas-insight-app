@@ -5,7 +5,6 @@ import { X } from "lucide-react"
 import { statuses } from "../meta-data"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DtCompaniesViewOptions } from "./dt-companies-view-options"
 import { DtCompaniesFacetedFilter } from "./dt-companies-faceted-filter"
 
 interface DtCompaniesToolbarProps<TData> {
@@ -53,7 +52,7 @@ export function DtCompaniesToolbar<TData>({
           </Button>
         )}
       </div>
-      <DtCompaniesViewOptions table={table} />
+      {/* <DtCompaniesViewOptions table={table} /> */}
     </div>
   )
 }
