@@ -76,7 +76,7 @@ export function DataTableCompanies<TData, TValue>({
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <DtCompaniesToolbar table={table} />
       <div className="">
         <Table>
