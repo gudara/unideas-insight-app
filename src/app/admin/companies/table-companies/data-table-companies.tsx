@@ -21,7 +21,7 @@ import { DtCompaniesPagination } from "./components/dt-companies-pagination";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { search } from "@/db-operations/company";
-import LoaderComponent from "../../loader-component";
+import LoaderComponent from "../../../../components/loader-component";
 
 interface DataTableCompaniesProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

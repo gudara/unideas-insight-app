@@ -12,6 +12,7 @@ import { NavAdminTask } from "@/app/interfaces";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import DynamicIcon from './dynamic-icon';
+import LoaderComponent from '@/components/loader-component';
 
 export const NavAdministrationTasks = () => {
   const [adminTasks, setAdminTasks] = useState<NavAdminTask[]>([]);
@@ -47,9 +48,13 @@ export const NavAdministrationTasks = () => {
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Administration</SidebarGroupLabel>
+      <SidebarGroupLabel>
+        <Link href="/admin">
+          Administration
+        </Link>
+      </SidebarGroupLabel>
       {
-        !adminTasks.length && <div className="text-xs p-2">Loading...</div>
+        !adminTasks.length && <div className="text-xs p-2"><LoaderComponent></LoaderComponent></div>
 
       }
       {
