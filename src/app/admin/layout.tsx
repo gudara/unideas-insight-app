@@ -1,15 +1,16 @@
 import AdministrationLayoutHeader from "@/components/administration-layout-header";
-import { SidebarInset } from "@/components/ui/sidebar";
+
 
 export default function AdminLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    
     return (
         <>
             <AdministrationLayoutHeader />
-            <div >
+            <div className="space-y-2 px-6 py-0 pb-0 md:block">
                 {children}
             </div>
         </>

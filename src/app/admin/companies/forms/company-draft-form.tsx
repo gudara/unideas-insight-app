@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {
     company?: Company | null;
@@ -21,7 +22,8 @@ type StateType = {
 };
 
 export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
-    const { toast } = useToast()
+    const { toast } = useToast();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof companyCreateFormSchema>>({
         resolver: zodResolver(companyCreateFormSchema),
@@ -42,25 +44,24 @@ export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
             else {
                 result = await createCompany(payload)
             }
+            if (!result.error && !result.errors) {
+                toast({
+                    title: "Done",
+                    description: "Successfully Saved.",
+                });
+                router.push(`/admin/companies/${result.data.id}`);
+            }
             return result;
         }, { data: company }
     );
 
     const action = async (formData: FormData) => {
         dispatch(formData);
-        //tost will be implement on this
-        toast({
-            title: "Done",
-            description: "Successfully Saved.",
-        })
+
     }
 
     return (
         <>
-            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mt-4">
-                {state?.data && `Update Company: ${state?.data?.name}`}
-                {!state?.data && `Create New Company`}
-            </h4>
 
             <Form  {...form}>
                 <form action={action} className="space-y-2">

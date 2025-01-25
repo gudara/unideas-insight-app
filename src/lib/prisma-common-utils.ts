@@ -88,8 +88,9 @@ export function errorHandler(error: any): { error: string } {
     if (error.code === 'P2002') {
       // P2002 is a unique constraint violation error code
       // console.error('Unique constraint violation: ', error.meta);
+      console.log(error.meta)
       return {
-        error: `Unique constraint violation: ${error.meta}`
+        error: `Unique constraint violation on ${error.meta?.modelName} at ${(error.meta?.target as Array<string>)?.toString()}`
       }
     } else {
       // console.error('Prisma error occurred:', error.message);
