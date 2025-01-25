@@ -1,5 +1,5 @@
 // lib/prisma.ts
-import { PrismaClient } from '@prisma/client';
+import { Company, PrismaClient } from '@prisma/client';
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
 
@@ -19,6 +19,17 @@ if (process.env.NODE_ENV === 'production') {
 
 export default prisma;
 
+export async function commonGet(modelName: string, id: number): Promise<Company | any>{
+  try {
+    return await prisma[modelName as keyof typeof prisma].findUnique({
+      where: {id}
+    });
+  } catch (error) {
+    return  errorHandler(error).error 
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 
 export async function commonSearch(
   modelName: string,
@@ -114,6 +125,7 @@ export function errorHandler(error: any): { error: string } {
 }
 
 export function comonSearchByTabelStateData(
+  modelName: string,
   columnFilters: ColumnFiltersState | undefined, 
   sorting: SortingState | undefined, 
   pagination: PaginationState | undefined
@@ -126,6 +138,6 @@ export function comonSearchByTabelStateData(
     //pagination  convert to skip and take by
     const {skip, take} = generateLimitByRQPaginationState(pagination)
     
-    return commonSearch('Company', skip, take, where, orderBy)
+    return commonSearch(modelName, skip, take, where, orderBy)
 }
 

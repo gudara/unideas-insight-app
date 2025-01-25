@@ -9,9 +9,9 @@ interface PageHeaderProps {
 const PageHeader: React.FC<PageHeaderProps> = ({ header, description }) => {
     return (
         <>
-            <div className="space-y-0.5">
+            <div className="relative">
                 <h2 className="text-2xl font-bold tracking-tight">{header}</h2>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-base/6" >
                     {description}
                 </p>
             </div>

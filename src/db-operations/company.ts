@@ -1,5 +1,5 @@
 'use server'
-import prisma, { commonSearch, errorHandler, generateWhereByRQColumnFiltersState, generateOrderByByRQSortingState, comonSearchByTabelStateData } from '@/lib/prisma-common-utils';
+import prisma, { commonSearch, errorHandler, generateWhereByRQColumnFiltersState, generateOrderByByRQSortingState, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
 import { Company, CreateCompanyFormData } from "../lib/interfaces/company-interfaces";
 import { DataTableFilter } from '@/lib/interfaces/data-table-interfaces';
 
@@ -91,7 +91,11 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
   }
 }
 
+export async function get( id: number) {
+  return commonGet('Company', id)
+}
+
 
 export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: Company[], error?: string | null }> {
-  return comonSearchByTabelStateData(columnFilters, sorting, pagination)
+  return comonSearchByTabelStateData('company', columnFilters, sorting, pagination)
 }
