@@ -13,35 +13,31 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import DynamicIcon from './dynamic-icon';
 import LoaderComponent from '@/components/loader-component';
+import { useQuery } from '@tanstack/react-query';
+import { getAdminTasks } from '@/app/admin/get-admin-tasks-json';
 
 export const NavAdministrationTasks = () => {
-  const [adminTasks, setAdminTasks] = useState<NavAdminTask[]>([]);
-  const [adminTasksLoaded, setAdminTasksLoaded] = useState<boolean>(false);
 
   const pathname = usePathname();
-  useEffect(() => {
-    async function fetchNavAdminTasks() {
-      if (!adminTasks.length) {
-        const res = await fetch('/api/layout/admin-tasks')
-        const data = await res.json()
-        setAdminTasks(data);
-        setAdminTasksLoaded(true);
-      }
+
+  const { data: adminTasks, isError, isLoading } = useQuery({
+    queryKey: ['admin-tasks'],
+    queryFn: async () => {
+        return await getAdminTasks()
     }
-    fetchNavAdminTasks()
-  }, [])
+  })
 
   useEffect(() => {
     function checkActive() {
-      if (adminTasksLoaded) {
-        setAdminTasks(adminTasks?.map(a => {
+      if (adminTasks?.length) {
+        adminTasks?.map((a: NavAdminTask) => {
           a.isActive = pathname.startsWith(a.url.trim());
           return a;
-        }));
+        });
       }
     }
     checkActive()
-  }, [pathname, adminTasksLoaded]);
+  }, [pathname, adminTasks]);
 
   // Dynamically import icons from lucide-react
 
@@ -54,11 +50,11 @@ export const NavAdministrationTasks = () => {
         </Link>
       </SidebarGroupLabel>
       {
-        !adminTasks.length && <div className="text-xs p-2"><LoaderComponent></LoaderComponent></div>
+        !adminTasks?.length && <div className="text-xs p-2"><LoaderComponent></LoaderComponent></div>
 
       }
       {
-        adminTasks.length && <>
+        adminTasks?.length && <>
           <SidebarMenu>
             {adminTasks.map((item) => (
               <SidebarMenuItem key={item.name}>

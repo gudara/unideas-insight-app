@@ -1,26 +1,35 @@
-import { useEffect, useState } from "react";
+'use client'
 import { NavAdminTask } from "../interfaces";
 import Link from "next/link";
 import DynamicIcon from "@/components/dynamic-icon";
+import { useQuery } from "@tanstack/react-query";
+import { getAdminTasks } from "./get-admin-tasks-json";
 
 export default function AdminTasks() {
-    const [adminTasks, setAdminTasks] = useState<NavAdminTask[]>([]);
-    useEffect(() => {
-        async function fetchNavAdminTasks() {
-            const res = await fetch('/api/layout/admin-tasks')
-            const data = await res.json()
-            setAdminTasks(data);
+    // const [adminTasks, setAdminTasks] = useState<NavAdminTask[]>([]);
+    // useEffect(() => {
+    //     async function fetchNavAdminTasks() {
+    //         const res = await fetch('/api/layout/admin-tasks')
+    //         const data = await res.json()
+    //         setAdminTasks(data);
+    //     }
+    //     fetchNavAdminTasks()
+    // }, [])
+    const { data: adminTasks, isError, isLoading } = useQuery({
+        queryKey: ['admin-tasks'],
+        queryFn: async () => {
+            return await getAdminTasks()
         }
-        fetchNavAdminTasks()
-    }, [])
+      })
 
-    // if (adminTasks.length <= 0) throw new Promise(() => {});
+
+    // if (isLoading) throw new Promise(() => {});
     
     return (
 
         <div className="flex flex-wrap flex-col gap-4">
             {
-                adminTasks.length && adminTasks.map((item, index) => (
+                adminTasks?.length && adminTasks.map((item: NavAdminTask, index: number) => (
                     <Link href={item.url} key={'t' + (index)}>
                         <div className="flex  rounded border p-4">
                             <div className="content-center text-muted-foreground mr-4">
