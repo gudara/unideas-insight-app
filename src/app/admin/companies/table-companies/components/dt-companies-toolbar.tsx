@@ -6,6 +6,7 @@ import { statuses } from "../meta-data"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DtCompaniesFacetedFilter } from "./dt-companies-faceted-filter"
+import { DtCompaniesAddNewButton } from "./dt-companies-add-new-button"
 
 interface DtCompaniesToolbarProps<TData> {
   table: Table<TData>
@@ -52,6 +53,7 @@ export function DtCompaniesToolbar<TData>({
           </Button>
         )}
       </div>
+      <DtCompaniesAddNewButton table={table} />
       {/* <DtCompaniesViewOptions table={table} /> */}
     </div>
   )
