@@ -19,25 +19,27 @@ import { getAdminTasks } from '@/app/admin/get-admin-tasks-json';
 export const NavAdministrationTasks = () => {
 
   const pathname = usePathname();
+  // let adminTasks: NavAdminTask[] = []//await getAdminTasks();
 
   const { data: adminTasks, isError, isLoading } = useQuery({
     queryKey: ['admin-tasks'],
     queryFn: async () => {
         return await getAdminTasks()
+        // return []
     }
   })
 
-  useEffect(() => {
-    function checkActive() {
-      if (adminTasks?.length) {
-        adminTasks?.map((a: NavAdminTask) => {
-          a.isActive = pathname.startsWith(a.url.trim());
-          return a;
-        });
-      }
-    }
-    checkActive()
-  }, [pathname, adminTasks]);
+  // useEffect(() => {
+  //   function checkActive() {
+  //     if (adminTasks?.length) {
+  //       adminTasks?.map((a: NavAdminTask) => {
+  //         a.isActive = pathname.startsWith(a.url.trim());
+  //         return a;
+  //       });
+  //     }
+  //   }
+  //   checkActive()
+  // }, [pathname]);
 
   // Dynamically import icons from lucide-react
 
@@ -56,12 +58,12 @@ export const NavAdministrationTasks = () => {
       {
         adminTasks?.length && <>
           <SidebarMenu>
-            {adminTasks.map((item) => (
+            {adminTasks?.map((item) => (
               <SidebarMenuItem key={item.name}>
                 <SidebarMenuButton asChild isActive={item.isActive}>
                   <Link href={item.url}>
                     {/* <DynamicIcon name={item.icon} /> */}
-                    <DynamicIcon name={item.icon} size={0}></DynamicIcon>
+                    <DynamicIcon iconName={item.icon} size={16}></DynamicIcon>
                     <span>{item.name} </span>
                   </Link>
                 </SidebarMenuButton>

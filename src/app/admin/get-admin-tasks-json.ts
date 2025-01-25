@@ -1,4 +1,5 @@
 import { NavAdminTask } from "../interfaces";
+import { get } from "@/db-operations/company";
 
 const tasks: NavAdminTask[] = [
   {
@@ -25,6 +26,5 @@ const tasks: NavAdminTask[] = [
 ]
 
 export async function getAdminTasks(): Promise<NavAdminTask[]> {
-  // await new Promise(resolve => setTimeout(resolve, 6000))
   return tasks;
 }

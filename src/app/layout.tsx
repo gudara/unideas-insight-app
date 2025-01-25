@@ -28,13 +28,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        suspense: true, 
-      },
-    },
-  })
+  const queryClient = new QueryClient();
+  // const queryClient = new QueryClient()
   return (
     <html lang="en" suppressHydrationWarning>
       <body
