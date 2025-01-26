@@ -1,11 +1,17 @@
 // components/DynamicIcon.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import {FC, useState, useEffect } from 'react';
+type IconName = keyof typeof import('lucide-react');
+
+interface DynamicIconProps {
+  iconName: IconName;
+  size: number;
+}
 
 // Dynamically import Lucide icons based on the icon name
-const DynamicIcon = ({ iconName, size }: { iconName: string, size: number }) => {
-  const [IconComponent, setIconComponent] = useState<React.ComponentType | null>(null);
+const DynamicIcon:  FC<DynamicIconProps> = ({ iconName, size }: DynamicIconProps) => {
+  const [IconComponent, setIconComponent] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const iconStyle = {
     width: size,
@@ -18,8 +24,14 @@ const DynamicIcon = ({ iconName, size }: { iconName: string, size: number }) => 
     const loadIcon = async () => {
       try {
         // Import the icon dynamically from lucide-react based on the iconName
-        const { [iconName]: ImportedIcon } = await import('lucide-react');
-        setIconComponent(() => ImportedIcon);
+        const icons = await import('lucide-react');
+        const Icon = icons[iconName];
+        if (Icon) {
+          setIconComponent(() => Icon);  // Set the imported icon component
+        } else {
+          setIconComponent(null);  // If no icon is found, set to null
+        }
+        // setIconComponent(() => ImportedIcon);
       } catch (error) {
         setIconComponent(null);
         console.error(`Icon "${iconName}" not found`, error);
