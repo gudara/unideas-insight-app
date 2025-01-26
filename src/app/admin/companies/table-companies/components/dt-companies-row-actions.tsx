@@ -23,7 +23,7 @@ export function DtCompaniesRowActions<TData>({
     };
 
     const handleEditAction = () => {
-        router.push(`/admin/companies/create/}`);
+        router.push(`/admin/companies/create}`);
     };
 
 
