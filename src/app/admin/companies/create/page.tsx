@@ -5,10 +5,10 @@ import { Company } from '../../../../lib/interfaces/company-interfaces';
 import PageHeader from '@/components/page-header';
 
 export default function CreateCompanyPage() {
-    let company: Company | null = null;
+    const company: Company | null = null;
 
-    let header = company ? `Update company ${company.name}` : 'Create a new company';
-    let description = company ? 'Update registerd company details' : 'Register a new company';
+    const header = company ? `Update company ${company.name}` : 'Create a new company';
+    const description = company ? 'Update registerd company details' : 'Register a new company';
     return (
         <>
             <PageHeader header={header} description={description} />

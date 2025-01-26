@@ -22,6 +22,10 @@ export function DtCompaniesRowActions<TData>({
         router.push(`/admin/companies/${row.getValue('id')}`);
     };
 
+    const handleEditAction = () => {
+        router.push(`/admin/companies/create/}`);
+    };
+
 
     return (
         <DropdownMenu>
@@ -35,7 +39,7 @@ export function DtCompaniesRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[160px]">
-                <DropdownMenuItem>Edit</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { handleViewAction() }}>Edit</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => { handleViewAction() }}>View</DropdownMenuItem>
                 <DropdownMenuItem>Disable</DropdownMenuItem>
             </DropdownMenuContent>

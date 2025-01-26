@@ -1,7 +1,5 @@
 import PageHeader from "@/components/page-header";
 import { get } from "@/db-operations/company";
-import { useQuery } from "@tanstack/react-query";
-import { Suspense } from "react";
 
 const CompanyPage = async ({
   params,
@@ -10,10 +8,10 @@ const CompanyPage = async ({
 }) => {
   const id = (await params).id;
 
-  let company = await get(+id)
+  const company = await get(+id)
 
-  let header = company ? `${company.name}` : 'Company';
-  let description = company ? '' : '';
+  const header = company ? `${company.name}` : 'Company';
+  const description =  '';
 
   return (
     <>
