@@ -1,6 +1,5 @@
 "use client"
 
-import { Table } from "@tanstack/react-table"
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
@@ -9,10 +8,7 @@ import { useRouter } from "next/navigation"
 //     table: Table<TData>
 // }
 
-export function DtCompaniesAddNewButton<TData>(
-//     {
-//     table,
-// }: DtCompaniesAddNewButtonProps<TData>
+export function DtCompaniesAddNewButton(
 ) {
     const route = useRouter()
     return (
