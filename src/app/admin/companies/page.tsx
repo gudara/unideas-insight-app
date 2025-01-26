@@ -11,7 +11,7 @@ export default async function CompaniesPage() {
     <>
       <PageHeader header={header} description={description} />
       <div className="container mx-auto pt-2">
-        <DataTableCompanies columns={columns} />
+        <DataTableCompanies columns={columns} data={[]} />
       </div>
     </>
   )

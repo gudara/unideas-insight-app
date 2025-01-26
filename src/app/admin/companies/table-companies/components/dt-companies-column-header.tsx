@@ -6,19 +6,19 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 
-interface DtCompaniesColumnHeaderProps<TData, TValue>
+interface DtCompaniesColumnHeaderProps<Company, TValue>
     extends React.HTMLAttributes<HTMLDivElement> {
-    column: Column<TData, TValue>
+    column: Column<Company, TValue>
     title: string,
     showHideOption: boolean
 }
 
-export function DtCompaniesColumnHeader<TData, TValue>({
+export function DtCompaniesColumnHeader<Company, TValue>({
     column,
     title,
     className,
     showHideOption
-}: DtCompaniesColumnHeaderProps<TData, TValue>) {
+}: DtCompaniesColumnHeaderProps<Company, TValue>) {
     if (!column.getCanSort()) {
         return <div className={cn(className)}>{title}</div>
     }

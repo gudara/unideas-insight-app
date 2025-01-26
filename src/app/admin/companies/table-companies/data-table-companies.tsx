@@ -20,14 +20,15 @@ import { DtCompaniesPagination } from "./components/dt-companies-pagination";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { search } from "@/db-operations/company";
-import LoaderComponent from "../../../../components/loader-component";
+import LoaderComponent from "@/components/loader-component";
 
 interface DataTableCompaniesProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+  columns: ColumnDef<TData, TValue>[],
+  data: TData[]
 }
 
 export function DataTableCompanies<TData, TValue>({
-  columns,
+  columns, data
 }: DataTableCompaniesProps<TData , TValue>) {
   // const [setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -43,7 +44,7 @@ export function DataTableCompanies<TData, TValue>({
   })
 
   const table = useReactTable({
-    data: queryData ? queryData.data : [],
+    data,
     columns,
     state: {
       sorting,
