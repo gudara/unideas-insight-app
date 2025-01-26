@@ -18,12 +18,22 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default prisma;
+type PrismaModelName = keyof PrismaClient;
 
-export async function commonGet(modelName: string, id: number): Promise<Company | any>{
+export async function commonGet(modelName: PrismaModelName, id: number): Promise<Company | any>{
   try {
-    return await prisma[modelName as keyof typeof prisma].findUnique({
-      where: {id}
-    });
+    const model = prisma[modelName];
+    if ('findUnique' in model) {
+      return await model.findUnique({
+        where: { id },
+      });
+    } 
+    else {
+      throw new Error(`Model ${modelName as string} does not have a findUnique method`);
+    }
+    // return await model.findUnique({
+    //   where: {id}
+    // });
   } catch (error) {
     return  errorHandler(error).error 
   } finally {
@@ -32,25 +42,31 @@ export async function commonGet(modelName: string, id: number): Promise<Company 
 }
 
 export async function commonSearch(
-  modelName: string,
+  modelName: PrismaModelName,
   skip: number,
   take: number,
   where: any,
   orderBy: any
 ): Promise<{ total: number, data: any[], error?: string | null }> {
-
+  const model = prisma[modelName];
   try {
-    const total = await prisma[modelName as keyof typeof prisma].count({
-      where: where ?? {},
-      orderBy: orderBy ?? {}
-    });
-    const data = await prisma[modelName as keyof typeof prisma].findMany({
-      skip: skip ?? 0,
-      take: take ?? 10,
-      where: where ?? {},
-      orderBy: orderBy ?? {}
-    });
-    return { data, total, error: null }
+    if ('count' in model && 'findMany' in model) {
+      const total = await model.count({
+        where: where ?? {},
+        orderBy: orderBy ?? {}
+      });
+      const data = await model.findMany({
+        skip: skip ?? 0,
+        take: take ?? 10,
+        where: where ?? {},
+        orderBy: orderBy ?? {}
+      });
+      return { data, total, error: null }
+    } 
+    else {
+      return { data: [], total: 0, error: `Model ${modelName as string} does not have a findUnique method` }
+    }
+    
   } catch (error) {
     return { data: [], total: 0, error: errorHandler(error).error }
   } finally {
@@ -125,7 +141,7 @@ export function errorHandler(error: any): { error: string } {
 }
 
 export function comonSearchByTabelStateData(
-  modelName: string,
+  modelName: PrismaModelName,
   columnFilters: ColumnFiltersState | undefined, 
   sorting: SortingState | undefined, 
   pagination: PaginationState | undefined

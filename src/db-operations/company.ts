@@ -92,7 +92,7 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
 }
 
 export async function get( id: number) {
-  return commonGet('Company', id)
+  return commonGet('company', id)
 }
 
 
