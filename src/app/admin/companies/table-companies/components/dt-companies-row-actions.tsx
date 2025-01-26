@@ -39,7 +39,7 @@ export function DtCompaniesRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[160px]">
-                <DropdownMenuItem onClick={() => { handleViewAction() }}>Edit</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { handleEditAction() }}>Edit</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => { handleViewAction() }}>View</DropdownMenuItem>
                 <DropdownMenuItem>Disable</DropdownMenuItem>
             </DropdownMenuContent>

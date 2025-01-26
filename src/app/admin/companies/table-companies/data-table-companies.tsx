@@ -35,7 +35,7 @@ export function DataTableCompanies<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([])
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
 
-  const { data: queryData, isError, isLoading } = useQuery({
+  const { data: queryData, isLoading } = useQuery({
     queryKey: ['companies', sorting, columnFilters, pagination],
     queryFn: async () => {
       return await search({ sorting, columnFilters, pagination });

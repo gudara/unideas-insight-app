@@ -40,11 +40,11 @@ export async function commonSearch(
 ): Promise<{ total: number, data: any[], error?: string | null }> {
 
   try {
-    let total = await prisma[modelName as keyof typeof prisma].count({
+    const total = await prisma[modelName as keyof typeof prisma].count({
       where: where ?? {},
       orderBy: orderBy ?? {}
     });
-    let data = await prisma[modelName as keyof typeof prisma].findMany({
+    const data = await prisma[modelName as keyof typeof prisma].findMany({
       skip: skip ?? 0,
       take: take ?? 10,
       where: where ?? {},
@@ -88,8 +88,8 @@ export function generateOrderByByRQSortingState(sorting: SortingState | undefine
 }
 
 export function generateLimitByRQPaginationState(pagination: PaginationState | undefined): {skip: number, take: number} {
-  let skip = (typeof pagination?.pageIndex !== "undefined" || typeof pagination?.pageSize !== "undefined" ) ?  (+pagination.pageIndex * +pagination.pageSize) : 0;
-  let take = ( typeof pagination?.pageSize !== "undefined" ) ?  ( +pagination.pageSize) : 10;
+  const skip = (typeof pagination?.pageIndex !== "undefined" || typeof pagination?.pageSize !== "undefined" ) ?  (+pagination.pageIndex * +pagination.pageSize) : 0;
+  const take = ( typeof pagination?.pageSize !== "undefined" ) ?  ( +pagination.pageSize) : 10;
   return {skip, take}
 }
 

@@ -1,9 +1,7 @@
 "use client"
 
-import { DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import { Table } from "@tanstack/react-table"
-import { Plus, Settings2 } from "lucide-react"
-import { DropdownMenu } from "@/components/ui/dropdown-menu"
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 

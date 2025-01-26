@@ -8,20 +8,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { NavAdminTask } from "@/app/interfaces";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import DynamicIcon from './dynamic-icon';
 import LoaderComponent from '@/components/loader-component';
 import { useQuery } from '@tanstack/react-query';
 import { getAdminTasks } from '@/app/admin/get-admin-tasks-json';
+import { useEffect } from 'react';
+import { NavAdminTask } from '@/app/interfaces';
 
 export const NavAdministrationTasks = () => {
 
   const pathname = usePathname();
   // let adminTasks: NavAdminTask[] = []//await getAdminTasks();
 
-  const { data: adminTasks, isError, isLoading } = useQuery({
+  const { data: adminTasks } = useQuery({
     queryKey: ['admin-tasks'],
     queryFn: async () => {
         return await getAdminTasks()
@@ -29,17 +29,17 @@ export const NavAdministrationTasks = () => {
     }
   })
 
-  // useEffect(() => {
-  //   function checkActive() {
-  //     if (adminTasks?.length) {
-  //       adminTasks?.map((a: NavAdminTask) => {
-  //         a.isActive = pathname.startsWith(a.url.trim());
-  //         return a;
-  //       });
-  //     }
-  //   }
-  //   checkActive()
-  // }, [pathname]);
+  useEffect(() => {
+    function checkActive() {
+      if (adminTasks?.length) {
+        adminTasks?.map((a: NavAdminTask) => {
+          a.isActive = pathname.startsWith(a.url.trim());
+          return a;
+        });
+      }
+    }
+    checkActive()
+  }, [pathname]);
 
   // Dynamically import icons from lucide-react
 

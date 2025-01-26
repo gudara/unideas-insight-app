@@ -21,7 +21,6 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar"
 import { NavReports } from "./nav-reports"
 import { NavAdministrationTasks } from "./nav-administration-tasks"

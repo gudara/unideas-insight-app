@@ -9,10 +9,10 @@ import LoaderComponent from "@/components/loader-component";
 
 export default async function AdminPage() {
 
-    let header = 'Administrations';
-    let description = 'Manage administration settings, users, workgroups and set report preferences.';
+    const header = 'Administrations';
+    const description = 'Manage administration settings, users, workgroups and set report preferences.';
 
-    let adminTasks: NavAdminTask[] = await getAdminTasks();
+    const adminTasks: NavAdminTask[] = await getAdminTasks();
 
     // const queryOptions: UseQueryOptions<NavAdminTask[], Error> = {
     //     suspense: true, // Correct use of suspense

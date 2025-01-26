@@ -1,5 +1,4 @@
 import { NavAdminTask } from "../interfaces";
-import { get } from "@/db-operations/company";
 
 const tasks: NavAdminTask[] = [
   {

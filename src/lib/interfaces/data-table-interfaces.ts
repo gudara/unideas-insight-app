@@ -1,4 +1,4 @@
-import { ColumnFiltersState, PaginationState, SortingState, SortingTableState } from "@tanstack/react-table";
+import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
 
 export interface DataTableFilter {
     sorting?: SortingState,

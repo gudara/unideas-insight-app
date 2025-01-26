@@ -1,5 +1,5 @@
 'use server'
-import prisma, { commonSearch, errorHandler, generateWhereByRQColumnFiltersState, generateOrderByByRQSortingState, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
+import prisma, {  errorHandler, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
 import { Company, CreateCompanyFormData } from "../lib/interfaces/company-interfaces";
 import { DataTableFilter } from '@/lib/interfaces/data-table-interfaces';
 

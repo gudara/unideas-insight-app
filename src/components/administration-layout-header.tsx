@@ -1,5 +1,4 @@
 'use client'
-import { Separator } from "@radix-ui/react-separator";
 import { usePathname } from "next/navigation";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "./ui/breadcrumb";
 import { SidebarTrigger } from "./ui/sidebar";

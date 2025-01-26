@@ -5,8 +5,8 @@ import PageHeader from "@/components/page-header";
 
 export default async function CompaniesPage() {
 
-  let header = 'Companies';
-  let description = 'Manage company settings, users, workgroups and set report preferences.';
+  const header = 'Companies';
+  const description = 'Manage company settings, users, workgroups and set report preferences.';
   return (
     <>
       <PageHeader header={header} description={description} />

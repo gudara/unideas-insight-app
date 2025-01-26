@@ -2,7 +2,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Icon } from 'lucide-react';
 
 // Dynamically import Lucide icons based on the icon name
 const DynamicIcon = ({ iconName, size }: { iconName: string, size: number }) => {
