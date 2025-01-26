@@ -35,7 +35,7 @@ export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
         }
     });
 
-    let [state, dispatch, isPending] = useActionState(
+    const [state, dispatch, isPending] = useActionState(
         async (previous: undefined | StateType, payload: FormData) => {
             let result;
             if (!!previous?.data?.id) {
@@ -112,7 +112,7 @@ export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
                         defaultValue={state?.data?.contactNumber}
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Contact persions' contact number</FormLabel>
+                                <FormLabel>Contact number</FormLabel>
                                 <FormControl>
                                     <Input placeholder="" {...field} />
                                 </FormControl>
