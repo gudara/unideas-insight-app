@@ -5,7 +5,6 @@ import {
   ColumnFiltersState,
   PaginationState,
   SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -29,8 +28,8 @@ interface DataTableCompaniesProps<TData, TValue> {
 
 export function DataTableCompanies<TData, TValue>({
   columns,
-}: DataTableCompaniesProps<TData, TValue>) {
-  const [setColumnVisibility] = useState<VisibilityState>({})
+}: DataTableCompaniesProps<TData , TValue>) {
+  // const [setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
@@ -44,8 +43,8 @@ export function DataTableCompanies<TData, TValue>({
   })
 
   const table = useReactTable({
-    data: queryData?.data ?? [],
-    columns: columns,
+    data: queryData ? queryData.data : [],
+    columns,
     state: {
       sorting,
       columnFilters,
@@ -59,11 +58,11 @@ export function DataTableCompanies<TData, TValue>({
     enableRowSelection: false,
     enableMultiSort: true,
     manualPagination: true, // Enable manual pagination
-    pageCount: +queryData?.total ? (Math.floor(queryData.total / pagination.pageSize) + (queryData.total % pagination.pageSize ? 1 : 0)) : 0,
+    pageCount: queryData?.total ? (Math.floor(queryData.total / pagination.pageSize) + (queryData.total % pagination.pageSize ? 1 : 0)) : 0,
     // onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
+    // onColumnVisibilityChange: setColumnVisibility,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
