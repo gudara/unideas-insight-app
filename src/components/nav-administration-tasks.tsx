@@ -39,7 +39,7 @@ export const NavAdministrationTasks = () => {
       }
     }
     checkActive()
-  }, [pathname]);
+  }, [pathname, adminTasks]);
 
   // Dynamically import icons from lucide-react
 
