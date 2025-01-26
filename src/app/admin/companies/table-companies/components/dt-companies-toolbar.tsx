@@ -53,7 +53,7 @@ export function DtCompaniesToolbar<TData>({
           </Button>
         )}
       </div>
-      <DtCompaniesAddNewButton table={table} />
+      <DtCompaniesAddNewButton />
       {/* <DtCompaniesViewOptions table={table} /> */}
     </div>
   )
