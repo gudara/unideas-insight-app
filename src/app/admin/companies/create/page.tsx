@@ -1,7 +1,7 @@
 'use client';
 
-import { CompanyDraftForm } from '../forms/company-draft-form';
-import { Company } from '../../../../lib/interfaces/company-interfaces';
+import { CompanyDraftForm } from '@/app/admin/companies/create/forms/company-draft-form';
+import { Company } from '@/lib/interfaces/company-interfaces';
 import PageHeader from '@/components/page-header';
 
 export default function CreateCompanyPage() {

@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from "@/components/ui/form";
-import { Company } from "../../../../lib/interfaces/company-interfaces";
+import { Company } from "@/lib/interfaces/company-interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { updateCompany, createCompany } from "./form-actions";
-import { companyCreateFormSchema } from "../zodSchemas";
 import React, { useActionState } from "react";
 import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { companyCreateFormSchema } from "@/app/admin/companies/zodSchemas";
 
 type Props = {
     company?: Company | null;

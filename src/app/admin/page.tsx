@@ -30,9 +30,11 @@ export default async function AdminPage() {
         <>
             <div>
                 <PageHeader header={header} description={description} />
-                <Suspense fallback={<LoaderComponent />}>
-                    <AdminTasks adminTasks={adminTasks} />
-                </Suspense>
+                <div className="mt-4">
+                    <Suspense fallback={<LoaderComponent />}>
+                        <AdminTasks adminTasks={adminTasks} />
+                    </Suspense>
+                </div>
             </div>
         </>
     )

@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { companyCreateFormSchema } from '../zodSchemas';
+import { companyCreateFormSchema } from '../../zodSchemas';
 import { CreateCompanyFormData } from '@/lib/interfaces/company-interfaces';
 import { create, update } from '@/db-operations/company';
 
