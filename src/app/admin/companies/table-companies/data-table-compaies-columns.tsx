@@ -8,7 +8,7 @@ import { Mail, Phone } from "lucide-react";
 import { DtCompaniesRowActions } from "./components/dt-companies-row-actions";
 
 
-export const columns: ColumnDef<Company>[] = [
+export const columns: ColumnDef<Company, any>[] = [
   
   {
     accessorKey: "id",

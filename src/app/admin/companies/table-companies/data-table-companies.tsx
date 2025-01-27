@@ -21,30 +21,38 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { search } from "@/db-operations/company";
 import LoaderComponent from "@/components/loader-component";
+import { Company } from "@/lib/interfaces/company-interfaces";
 
 interface DataTableCompaniesProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[],
-  data: TData[]
+  columns: ColumnDef<Company, any>[],
 }
 
 export function DataTableCompanies<TData, TValue>({
-  columns, data
+  columns
 }: DataTableCompaniesProps<TData , TValue>) {
   // const [setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
+  const [pageCount, setPageCount] = useState<number>(0);
+  // let queryData: Company[] = []
 
-  const { data: queryData, isLoading } = useQuery({
+  const { data = {total: 0, data: [], error: null}, isLoading } = useQuery<{
+    total: number;
+    data: Company[];
+    error?: string | null;
+}>({
     queryKey: ['companies', sorting, columnFilters, pagination],
     queryFn: async () => {
-      return await search({ sorting, columnFilters, pagination });
+      const d = await search({ sorting, columnFilters, pagination })
+      return d?.data?.length ? d : {total: 0, data: [], error: null};
+
     },
 
   })
 
-  const table = useReactTable({
-    data,
+  const table = useReactTable<Company>({
+    data: data.data,
     columns,
     state: {
       sorting,
@@ -59,7 +67,8 @@ export function DataTableCompanies<TData, TValue>({
     enableRowSelection: false,
     enableMultiSort: true,
     manualPagination: true, // Enable manual pagination
-    pageCount: queryData?.total ? (Math.floor(queryData.total / pagination.pageSize) + (queryData.total % pagination.pageSize ? 1 : 0)) : 0,
+    pageCount: data?.total ? (Math.floor(data.total / pagination.pageSize) + (data.total % pagination.pageSize ? 1 : 0)) : 0,
+    // pageCount: queryData?.total ? (Math.floor(queryData.total / pagination.pageSize) + (queryData.total % pagination.pageSize ? 1 : 0)) : 0,
     // onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
