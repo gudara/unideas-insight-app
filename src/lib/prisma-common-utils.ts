@@ -20,17 +20,17 @@ if (process.env.NODE_ENV === 'production') {
 export default prisma;
 type PrismaModelName = keyof PrismaClient;
 
-export async function commonGet(modelName: PrismaModelName, id: number): Promise<Company | any>{
+export async function commonGet(modelName: any, id: number): Promise<Company | any>{
   try {
-    const model = prisma[modelName];
-    if ('findUnique' in model) {
-      return await model.findUnique({
+    // const model = prisma[modelName];
+    // if ('findUnique' in model) {
+      return await prisma.company.findUnique({
         where: { id },
       });
-    } 
-    else {
-      throw new Error(`Model ${modelName as string} does not have a findUnique method`);
-    }
+    // } 
+    // else {
+      // throw new Error(`Model ${modelName as string} does not have a findUnique method`);
+    // }
     // return await model.findUnique({
     //   where: {id}
     // });
@@ -42,30 +42,30 @@ export async function commonGet(modelName: PrismaModelName, id: number): Promise
 }
 
 export async function commonSearch(
-  modelName: PrismaModelName,
+  modelName: any,
   skip: number,
   take: number,
   where: any,
   orderBy: any
 ): Promise<{ total: number, data: any[], error?: string | null }> {
-  const model = prisma[modelName];
+  // const model = prisma[modelName];
   try {
-    if ('count' in model && 'findMany' in model) {
-      const total = await model.count({
+    // if ('count' in model && 'findMany' in model) {
+      const total = await prisma.company.count({
         where: where ?? {},
         orderBy: orderBy ?? {}
       });
-      const data = await model.findMany({
+      const data = await prisma.company.findMany({
         skip: skip ?? 0,
         take: take ?? 10,
         where: where ?? {},
         orderBy: orderBy ?? {}
       });
       return { data, total, error: null }
-    } 
-    else {
-      return { data: [], total: 0, error: `Model ${modelName as string} does not have a findUnique method` }
-    }
+    // } 
+    // else {
+    //   return { data: [], total: 0, error: `Model ${modelName as string} does not have a findUnique method` }
+    // }
     
   } catch (error) {
     return { data: [], total: 0, error: errorHandler(error).error }

@@ -92,7 +92,8 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
 }
 
 export async function get( id: number) {
-  return commonGet('company', id)
+
+  return commonGet(prisma.company, id)
 }
 
 
