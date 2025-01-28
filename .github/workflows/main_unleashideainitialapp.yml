@@ -24,12 +24,6 @@ jobs:
       - name: npm install
         run: npm install  --legacy-peer-deps
 
-      - name: Set up Database URL for Prisma
-        run: echo "DATABASE_URL=${{ github.action.secrets.DATABASE_URL }}" >> $GITHUB_ENV
-
-      - name: Run Prisma Migrate
-        run: npx prisma migrate deploy
-
       - name: Build 
         run: npm run build --if-present
 
@@ -55,6 +49,13 @@ jobs:
       id-token: write #This is required for requesting the JWT
 
     steps:
+      - name: Run Prisma migrations
+        run: npx prisma maigration
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      
+
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
