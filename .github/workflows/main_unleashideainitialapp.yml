@@ -24,6 +24,9 @@ jobs:
       - name: npm install
         run: npm install  --legacy-peer-deps
 
+      - name: Set up Database URL for Prisma
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+
       - name: Run Prisma Migrate
         run: npx prisma migrate deploy
 
