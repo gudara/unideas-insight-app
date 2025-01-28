@@ -23,7 +23,7 @@ model Company {
   id        Int             @id @default(autoincrement())
   name     String           @db.VarChar(50) @unique
   contactPersonName String  @db.VarChar(100) 
-  address String  @db.VarChar(100) 
+  address String?  @db.VarChar(100) 
   contactNumber   String?   @db.VarChar(20) 
   contactEmail   String?    @db.VarChar(50) @unique
   createdAt DateTime        @default(now())

@@ -11,7 +11,7 @@ export interface Company extends BaseInterface {
     id: number;
     name: string;
     contactPersonName: string;
-    address: string;
+    address?: string;
     contactNumber?: string | null;
     contactEmail?: string | null;
     status: CompanyStatus;
