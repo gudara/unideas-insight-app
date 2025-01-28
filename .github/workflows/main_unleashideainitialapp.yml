@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: Run Prisma db generate
-        run: npx prisma generate --schema=./prisma/schema.prisma
+        run: npx prisma migrate deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
