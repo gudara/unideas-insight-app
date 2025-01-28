@@ -22,5 +22,6 @@ export interface CreateCompanyFormData {
     contactPersonName: string;
     contactNumber: string;
     contactEmail: string;
+    address?: string;
     status: 'Enable' | 'Disable';
 }
