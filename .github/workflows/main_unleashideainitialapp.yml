@@ -76,4 +76,3 @@ jobs:
           app-name: 'unleashideainitialapp'
           slot-name: 'Production'
           package: .
-          
