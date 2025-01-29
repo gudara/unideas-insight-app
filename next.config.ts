@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
     DATABASE_URL: process.env.DATABASE_URL || 'your_default_local_url_here'
   },
   compress: true,
-  output: 'standalone',
 };
 
 export default nextConfig;
