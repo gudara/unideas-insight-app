@@ -24,7 +24,7 @@ jobs:
           node-version: '20.x'
 
       - name: Install
-        run: npm install --legacy-peer-deps
+        run: npm install --force
         
       - name: Run Prisma db generate
         run: npx prisma migrate deploy
