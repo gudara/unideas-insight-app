@@ -42,14 +42,14 @@ export const DivisionDraftForm: React.FC<Props> = ({ company, division }) => {
     const [state, dispatch, isPending] = useActionState(
         async (previous: undefined | StateType, payload: FormData) => {
             let result;
-            if(!!company){
+            if (!!company) {
                 if (!!previous?.data?.id) {
                     result = await updateDivision(company, previous.data.id, payload)
                 }
                 else {
                     result = await createDivision(company, payload)
                 }
-            
+
                 if (!result.error && !result.errors) {
                     toast({
                         title: "Done",
@@ -58,7 +58,7 @@ export const DivisionDraftForm: React.FC<Props> = ({ company, division }) => {
                     router.push(`/admin/companies/${result.data.companyId}`);
                 }
             }
-            else{
+            else {
                 toast({
                     title: "Error",
                     description: "Company is missin.",

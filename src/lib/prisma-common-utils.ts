@@ -1,5 +1,5 @@
 // lib/prisma.ts
-import { Company, PrismaClient } from '@prisma/client';
+import { Company, Prisma, PrismaClient } from '@prisma/client';
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
 
@@ -18,55 +18,47 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default prisma;
-type PrismaModelName = keyof PrismaClient;
+type ModelNames = keyof PrismaClient;
 
-export async function commonGet(modelName: any, id: number): Promise<Company | any>{
+export async function commonGet(modelName: ModelNames, id: number): Promise<Company | any> {
   try {
-    // const model = prisma[modelName];
-    // if ('findUnique' in model) {
-      return await prisma.company.findUnique({
-        where: { id },
-      });
-    // } 
-    // else {
-      // throw new Error(`Model ${modelName as string} does not have a findUnique method`);
-    // }
-    // return await model.findUnique({
-    //   where: {id}
-    // });
+    const model = prisma[modelName] as any;
+    return await model.findUnique({
+      where: { id },
+    });
   } catch (error) {
-    return  errorHandler(error).error 
+    return errorHandler(error).error
   } finally {
     await prisma.$disconnect();
   }
 }
 
 export async function commonSearch(
-  modelName: any,
+  modelName: ModelNames,
   skip: number,
   take: number,
   where: any,
   orderBy: any
 ): Promise<{ total: number, data: any[], error?: string | null }> {
-  // const model = prisma[modelName];
+  const model = prisma[modelName] as any;
   try {
     // if ('count' in model && 'findMany' in model) {
-      const total = await prisma.company.count({
-        where: where ?? {},
-        orderBy: orderBy ?? {}
-      });
-      const data = await prisma.company.findMany({
-        skip: skip ?? 0,
-        take: take ?? 10,
-        where: where ?? {},
-        orderBy: orderBy ?? {}
-      });
-      return { data, total, error: null }
+    const total = await model.count({
+      where: where ?? {},
+      orderBy: orderBy ?? {}
+    });
+    const data = await model.findMany({
+      skip: skip ?? 0,
+      take: take ?? 10,
+      where: where ?? {},
+      orderBy: orderBy ?? {}
+    });
+    return { data, total, error: null }
     // } 
     // else {
     //   return { data: [], total: 0, error: `Model ${modelName as string} does not have a findUnique method` }
     // }
-    
+
   } catch (error) {
     return { data: [], total: 0, error: errorHandler(error).error }
   } finally {
@@ -96,17 +88,17 @@ export function generateWhereByRQColumnFiltersState(columnFilters: ColumnFilters
 export function generateOrderByByRQSortingState(sorting: SortingState | undefined): any {
   // short string convert to where
   let orderByString = '[';
-  sorting?.map(item=>{
+  sorting?.map(item => {
     orderByString = `${orderByString} { "${item.id}" : "${item.desc ? "desc" : "asc"}" }`;
   })
   orderByString = `${orderByString} ]`;
   return JSON.parse(orderByString);
 }
 
-export function generateLimitByRQPaginationState(pagination: PaginationState | undefined): {skip: number, take: number} {
-  const skip = (typeof pagination?.pageIndex !== "undefined" || typeof pagination?.pageSize !== "undefined" ) ?  (+pagination.pageIndex * +pagination.pageSize) : 0;
-  const take = ( typeof pagination?.pageSize !== "undefined" ) ?  ( +pagination.pageSize) : 10;
-  return {skip, take}
+export function generateLimitByRQPaginationState(pagination: PaginationState | undefined): { skip: number, take: number } {
+  const skip = (typeof pagination?.pageIndex !== "undefined" || typeof pagination?.pageSize !== "undefined") ? (+pagination.pageIndex * +pagination.pageSize) : 0;
+  const take = (typeof pagination?.pageSize !== "undefined") ? (+pagination.pageSize) : 10;
+  return { skip, take }
 }
 
 export function errorHandler(error: any): { error: string } {
@@ -141,19 +133,17 @@ export function errorHandler(error: any): { error: string } {
 }
 
 export function comonSearchByTabelStateData(
-  modelName: PrismaModelName,
-  columnFilters: ColumnFiltersState | undefined, 
-  sorting: SortingState | undefined, 
+  modelName: ModelNames,
+  columnFilters: ColumnFiltersState | undefined,
+  sorting: SortingState | undefined,
   pagination: PaginationState | undefined
-): Promise<{total: number, data: any[] , error?: string | null}>
-{
-    // filter convert to where
-    const where = generateWhereByRQColumnFiltersState(columnFilters)
-    //sorting  convert to order by
-    const orderBy = generateOrderByByRQSortingState(sorting)
-    //pagination  convert to skip and take by
-    const {skip, take} = generateLimitByRQPaginationState(pagination)
-    
-    return commonSearch(modelName, skip, take, where, orderBy)
+): Promise<{ total: number, data: any[], error?: string | null }> {
+  // filter convert to where
+  const where = generateWhereByRQColumnFiltersState(columnFilters)
+  //sorting  convert to order by
+  const orderBy = generateOrderByByRQSortingState(sorting)
+  //pagination  convert to skip and take by
+  const { skip, take } = generateLimitByRQPaginationState(pagination)
+  return commonSearch(modelName, skip, take, where, orderBy)
 }
 

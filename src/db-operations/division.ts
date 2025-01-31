@@ -11,8 +11,6 @@ export async function create(company: Company, data: CreateDivisionFormData, use
             error: "Data format error"
         }
     }
-    console.log('---------', company)
-
     const divisionEx = await prisma.division.findUnique({
         where: {
             companyId: company.id,
@@ -28,7 +26,6 @@ export async function create(company: Company, data: CreateDivisionFormData, use
     }
 
     try {
-        console.log('---------', company)
         const division = await prisma.division.create({
             data: { ...data, companyId: company.id, createdBy: user.username },
         });
@@ -98,10 +95,10 @@ export async function update(company: Company, id: number, data: CreateDivisionF
 }
 
 export async function get(id: number) {
-    return commonGet(prisma.division, id)
+    return commonGet('division' as any, id)
 }
-
 
 export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: Division[], error?: string | null }> {
-    return comonSearchByTabelStateData('division', columnFilters, sorting, pagination)
+    return comonSearchByTabelStateData('division' as any, columnFilters, sorting, pagination)
 }
+

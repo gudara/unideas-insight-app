@@ -33,8 +33,6 @@ export async function createDivision(company: Company, formData: any) {
     };
   }
 
-  console.log("++++++++++++++++++++++++++=Form action", company)
-
   return await create(company, validate.data as CreateDivisionFormData, {username: 'user'});
 }
 

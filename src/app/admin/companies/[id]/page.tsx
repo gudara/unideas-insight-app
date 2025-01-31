@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
 import Loading from "../loading";
+import { DivisionList } from "./components/division-list";
 
 const CompanyPage = async ({
   params,
@@ -54,97 +55,7 @@ const CompanyPage = async ({
                   </div>
                 </form>
               </div>
-              <div className="flex flex-col gap-2 p-4 pt-0">
-                <button
-                  key="itemID"
-                  className={cn(
-                    "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-                    true && "bg-muted"
-                  )}
-                  
-                >
-                  <div className="flex w-full flex-col gap-1">
-                    <div className="flex items-center">
-                      <div className="flex items-center gap-2">
-                        <div className="font-semibold">Cutting</div>
-                      </div>
-                      <div
-                        className={cn(
-                          "ml-auto text-xs",
-                          ''
-                        )}
-                      >
-                        lksafdlsf
-                      </div>
-                    </div>
-                    <div className="text-xs font-medium">Sub title hear</div>
-                  </div>
-                  <div className="line-clamp-2 text-xs text-muted-foreground">
-                    description hear
-                  </div>
-              
-                </button>
-                
-                <button
-                  key="itemID2"
-                  className={cn(
-                    "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-                    true && "bg-muted"
-                  )}
-                  
-                >
-                  <div className="flex w-full flex-col gap-1">
-                    <div className="flex items-center">
-                      <div className="flex items-center gap-2">
-                        <div className="font-semibold">Cutting</div>
-                      </div>
-                      <div
-                        className={cn(
-                          "ml-auto text-xs",
-                          ''
-                        )}
-                      >
-                        lksafdlsf
-                      </div>
-                    </div>
-                    <div className="text-xs font-medium">Sub title hear</div>
-                  </div>
-                  <div className="line-clamp-2 text-xs text-muted-foreground">
-                    description hear
-                  </div>
-              
-                </button>
-                
-                <button
-                  key="itemID3"
-                  className={cn(
-                    "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-                    true && "bg-muted"
-                  )}
-                  
-                >
-                  <div className="flex w-full flex-col gap-1">
-                    <div className="flex items-center">
-                      <div className="flex items-center gap-2">
-                        <div className="font-semibold">Cutting</div>
-                      </div>
-                      <div
-                        className={cn(
-                          "ml-auto text-xs",
-                          ''
-                        )}
-                      >
-                        lksafdlsf
-                      </div>
-                    </div>
-                    <div className="text-xs font-medium">Sub title hear</div>
-                  </div>
-                  <div className="line-clamp-2 text-xs text-muted-foreground">
-                    description hear
-                  </div>
-              
-                </button>
-              </div>
+              <DivisionList company={company} />
             </div>
           </ResizablePanel>
           <ResizableHandle withHandle />

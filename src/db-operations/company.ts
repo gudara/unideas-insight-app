@@ -92,9 +92,8 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
 }
 
 export async function get( id: number) {
-  return commonGet(prisma.company, id)
+  return commonGet('company', id)
 }
-
 
 export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: Company[], error?: string | null }> {
   return comonSearchByTabelStateData('company', columnFilters, sorting, pagination)
