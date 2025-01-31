@@ -1,32 +1,35 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from "@/components/ui/form";
 import { Company } from "@/lib/interfaces/company-interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { updateCompany, createCompany } from "./form-actions";
 import React, { useActionState } from "react";
 import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { companyCreateFormSchema } from "@/app/admin/companies/zodSchemas";
+import { Division } from "@/lib/interfaces/division-interfaces";
+import { divisionCreateFormSchema } from "../../zodSchemas";
+import { createDivision, updateDivision } from "./form-actions";
 
 type Props = {
     company?: Company | null;
+    division?: Division | null;
 };
 type StateType = {
-    data?: Company;
+    data?: Division;
     errors?: any[];
     error?: string
 };
 
-export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
+export const DivisionDraftForm: React.FC<Props> = ({ company, division }) => {
     const { toast } = useToast();
     const router = useRouter();
 
-    const form = useForm<z.infer<typeof companyCreateFormSchema>>({
-        resolver: zodResolver(companyCreateFormSchema),
+    const form = useForm<z.infer<typeof divisionCreateFormSchema>>({
+        resolver: zodResolver(divisionCreateFormSchema),
         defaultValues: {
             name: "",
             contactPersonName: "",
@@ -39,18 +42,28 @@ export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
     const [state, dispatch, isPending] = useActionState(
         async (previous: undefined | StateType, payload: FormData) => {
             let result;
-            if (!!previous?.data?.id) {
-                result = await updateCompany(previous.data.id, payload)
+            if(!!company){
+                if (!!previous?.data?.id) {
+                    result = await updateDivision(company, previous.data.id, payload)
+                }
+                else {
+                    result = await createDivision(company, payload)
+                }
+            
+                if (!result.error && !result.errors) {
+                    toast({
+                        title: "Done",
+                        description: "Successfully Saved.",
+                    });
+                    router.push(`/admin/companies/${result.data.companyId}`);
+                }
             }
-            else {
-                result = await createCompany(payload)
-            }
-            if (!result.error && !result.errors) {
+            else{
                 toast({
-                    title: "Done",
-                    description: "Successfully Saved.",
+                    title: "Error",
+                    description: "Company is missin.",
+                    variant: "destructive"
                 });
-                router.push(`/admin/companies/${result.data.id}`);
             }
             return result;
         }, { data: company }
@@ -72,7 +85,7 @@ export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
                         defaultValue={state?.data?.name}
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Company Name</FormLabel>
+                                <FormLabel>Name</FormLabel>
                                 <FormControl>
                                     <Input placeholder="" {...field} />
                                 </FormControl>
@@ -173,3 +186,4 @@ export const CompanyDraftForm: React.FC<Props> = ({ company }) => {
         </>
     )
 };
+

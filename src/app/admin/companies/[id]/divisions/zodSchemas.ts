@@ -1,13 +1,13 @@
 import { phoneRegex } from "@/app/reg-exp";
 import { z } from "zod";
 
-export const companyCreateFormSchema = z.object({
+export const divisionCreateFormSchema = z.object({
     name: z.string()
         .min(3, {
-            message: "The company name must be at least 3 characters."
+            message: "The division name must be at least 3 characters."
         })
         .max(50, {
-            message: "The company name must be less than 50 characters."
+            message: "The division name must be less than 50 characters."
         })
         .nonempty({
             message: "The company name is required."

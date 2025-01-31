@@ -1,6 +1,6 @@
 'use server'
 import prisma, {  errorHandler, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
-import { Company, CreateCompanyFormData } from "../lib/interfaces/company-interfaces";
+import { Company, CreateCompanyFormData } from "@/lib/interfaces/company-interfaces";
 import { DataTableFilter } from '@/lib/interfaces/data-table-interfaces';
 
 export async function create(data: CreateCompanyFormData, user: any) {
@@ -92,7 +92,6 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
 }
 
 export async function get( id: number) {
-
   return commonGet(prisma.company, id)
 }
 

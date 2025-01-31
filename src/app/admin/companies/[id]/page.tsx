@@ -16,6 +16,14 @@ const CompanyPage = async ({
 }) => {
   const id = (await params).id;
 
+  // const { data: company, isLoading } = useQuery<Company>({
+  //   queryKey: ['companies', id],
+  //   queryFn: async () => {
+  //     const d = await get(+id)
+  //     return d;
+  //   },
+  // })
+
   const company = await get(+id)
 
   const header = company ? `${company.name}` : 'Company';
@@ -24,7 +32,7 @@ const CompanyPage = async ({
   return (
     <Suspense fallback={<Loading />}>
       <PageHeader header={header} description={description} />
-      <div className="w-full h-full flex justify-center items-center border border-t-0">
+      <div className="w-full h-full flex justify-center items-center border border-t-0 mt-2">
         <ResizablePanelGroup
           direction="horizontal"
           className="min-h-full max-h-full max-w-full rounded"
@@ -35,7 +43,7 @@ const CompanyPage = async ({
             <div >
               <div className="flex justify-between px-4 py-2">
                 <h1 className="text-lg font-bold">Divisions</h1>
-                <DivisionAddNewButton company={company} />
+                {company && <DivisionAddNewButton company={company} />}
               </div>
               <Separator />
               <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">

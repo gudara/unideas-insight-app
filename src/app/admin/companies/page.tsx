@@ -10,7 +10,7 @@ export default async function CompaniesPage() {
   return (
     <>
       <PageHeader header={header} description={description} />
-      <div className="container mx-auto pt-2">
+      <div className="container mx-auto mt-2 pt-2">
         <DataTableCompanies columns={columns} />
       </div>
     </>

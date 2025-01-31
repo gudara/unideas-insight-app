@@ -1,12 +1,13 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { companyCreateFormSchema } from '../../zodSchemas';
-import { CreateCompanyFormData } from '@/lib/interfaces/company-interfaces';
-import { create, update } from '@/db-operations/company';
+import { create, update } from '@/db-operations/division';
+import { divisionCreateFormSchema } from '../../zodSchemas';
+import { CreateDivisionFormData } from '@/lib/interfaces/division-interfaces';
+import { Company } from '@/lib/interfaces/company-interfaces';
 
 
-export async function createCompany(formData: any) {
+export async function createDivision(company: Company, formData: any) {
   //TODO - need to implement authendication
 
   //check wether form data or not
@@ -18,7 +19,7 @@ export async function createCompany(formData: any) {
 
   //validate using zod
   const currentFormData = Object.fromEntries(formData);
-  const validate = companyCreateFormSchema.safeParse(currentFormData);
+  const validate = divisionCreateFormSchema.safeParse(currentFormData);
   if (!validate.success) {
     const formFieldErrors = validate.error.flatten().fieldErrors;
     return {
@@ -32,11 +33,13 @@ export async function createCompany(formData: any) {
     };
   }
 
-  return await create(validate.data as CreateCompanyFormData, {username: 'user'});
+  console.log("++++++++++++++++++++++++++=Form action", company)
+
+  return await create(company, validate.data as CreateDivisionFormData, {username: 'user'});
 }
 
 
-export async function updateCompany(id: number, formData: any): Promise<any> {
+export async function updateDivision(company: Company, id: number, formData: any): Promise<any> {
   //TODO - need to implement authendication
 
   //check wether form data or not
@@ -48,7 +51,7 @@ export async function updateCompany(id: number, formData: any): Promise<any> {
 
   //validate using zod
   const currentFormData = Object.fromEntries(formData);
-  const validate = companyCreateFormSchema.safeParse(currentFormData);
+  const validate = divisionCreateFormSchema.safeParse(currentFormData);
   if (!validate.success) {
     const formFieldErrors = validate.error.flatten().fieldErrors;
     return {
@@ -62,7 +65,7 @@ export async function updateCompany(id: number, formData: any): Promise<any> {
     };
   }
 
-  return await update(id, validate.data as CreateCompanyFormData, {username: 'user'})
+  return await update(company, id, validate.data as CreateDivisionFormData, {username: 'user'})
   
   // return validate.data
   revalidatePath('/')

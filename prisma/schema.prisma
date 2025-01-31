@@ -13,40 +13,45 @@ datasource db {
   url      = env("DATABASE_URL") //"postgresql://postgres:123@localhost:5432/test?schema=public&connection_limit=10"
 }
 
-
 enum CompanyStatus {
   Enable
   Disable
 }
 
+
+enum DivisionStatus {
+  Enable
+  Disable
+}
+
 model Company {
-  id        Int             @id @default(autoincrement())
-  name     String           @db.VarChar(50) @unique
-  contactPersonName String  @db.VarChar(100) 
-  address String?  @db.VarChar(100) 
-  contactNumber   String?   @db.VarChar(20) 
-  contactEmail   String?    @db.VarChar(50) @unique
-  createdAt DateTime        @default(now())
-  lastUpdated DateTime      @updatedAt
-  createdBy String          @db.VarChar(50)
-  lastUpdatedBy String?     @db.VarChar(50)
-  status CompanyStatus      @default(Enable)
+  id                Int           @id @default(autoincrement())
+  name              String        @unique @db.VarChar(50)
+  contactPersonName String        @db.VarChar(100)
+  address           String?       @db.VarChar(100)
+  contactNumber     String?       @db.VarChar(20)
+  contactEmail      String?       @unique @db.VarChar(50)
+  createdAt         DateTime      @default(now())
+  lastUpdated       DateTime      @updatedAt
+  createdBy         String        @db.VarChar(50)
+  lastUpdatedBy     String?       @db.VarChar(50)
+  status            CompanyStatus @default(Enable)
 
   Divisions Division[]
 }
 
 model Division {
-  id        Int             @id @default(autoincrement())
-  companyId Int  
-  name     String           @db.VarChar(50) @unique
-  contactPersonName String  @db.VarChar(100) 
-  address String  @db.VarChar(200) 
-  contactNumber   String?   @db.VarChar(20) 
-  contactEmail   String?    @db.VarChar(50) @unique
-  company         Company    @relation(fields: [companyId], references: [id])
-  createdAt DateTime        @default(now())
-  lastUpdated DateTime      @updatedAt
-  createdBy String          @db.VarChar(50)
-  lastUpdatedBy String?     @db.VarChar(50)
-  status CompanyStatus      @default(Enable)
+  id                Int           @id @default(autoincrement())
+  companyId         Int
+  name              String        @unique @db.VarChar(50)
+  contactPersonName String        @db.VarChar(100)
+  address           String?       @db.VarChar(200)
+  contactNumber     String?       @db.VarChar(20)
+  contactEmail      String?       @unique @db.VarChar(50)
+  company           Company?      @relation(fields: [companyId], references: [id])
+  createdAt         DateTime      @default(now())
+  lastUpdated       DateTime      @updatedAt
+  createdBy         String        @db.VarChar(50)
+  lastUpdatedBy     String?       @db.VarChar(50)
+  status            DivisionStatus @default(Enable)
 }

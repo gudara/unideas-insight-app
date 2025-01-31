@@ -12,9 +12,9 @@ interface DivisionAddNewButtonProps {
 export const DivisionAddNewButton: React.FC<DivisionAddNewButtonProps> = ({company}) => {
     // const company = (await params).company;
     const route = useRouter()
-    
+
     return (
-        <Button variant="outline" size="sm" onClick={()=>{ route.push(`/admin/companies/${company?.id}/division/create`)}}>
+        <Button variant="outline" size="sm" onClick={()=>{ route.push(`/admin/companies/${company?.id}/divisions/create`)}}>
             <Plus /> Add New
         </Button>
     )

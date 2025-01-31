@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Company } from "@/lib/interfaces/company-interfaces";
 import { DtCompaniesColumnHeader } from "./components/dt-companies-column-header";
 import { statuses } from "./meta-data";
-import { Mail, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { DtCompaniesRowActions } from "./components/dt-companies-row-actions";
 
 
@@ -39,6 +39,22 @@ export const columns: ColumnDef<Company, any>[] = [
         <div className="flex space-x-2">
           <span className="max-w-[500px] truncate font-medium">
             {row.getValue("contactPersonName")}
+          </span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: "address",
+    header: ({ column }) => (
+      <DtCompaniesColumnHeader column={column} title="Address" showHideOption={false} />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <MapPin className="mr-2 h-4 w-4 text-muted-foreground" /> 
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("address")}
           </span>
         </div>
       )

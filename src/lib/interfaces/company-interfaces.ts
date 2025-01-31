@@ -1,17 +1,12 @@
 import { CompanyStatus } from '@prisma/client';
+import { BaseInterface } from './base-interface';
 
-interface BaseInterface {
-    createdAt: Date;
-    lastUpdated: Date;
-    createdBy: string;
-    lastUpdatedBy?: string | null;
-}
 
 export interface Company extends BaseInterface {
     id: number;
     name: string;
     contactPersonName: string;
-    address?: string;
+    address?: string ;
     contactNumber?: string | null;
     contactEmail?: string | null;
     status: CompanyStatus;
