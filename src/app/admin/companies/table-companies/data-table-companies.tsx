@@ -91,7 +91,7 @@ export function DataTableCompanies<TData, TValue>({
       <DtCompaniesToolbar table={table} />
       <div className="">
         <Table>
-          <TableHeader className="bg-slate-50">
+          <TableHeader className="bg-slate-50 dark:bg-slate-900">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {

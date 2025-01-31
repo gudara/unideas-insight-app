@@ -6,6 +6,8 @@ import { Separator } from "@/components/ui/separator";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { Suspense } from "react";
+import Loading from "../loading";
 
 const CompanyPage = async ({
   params,
@@ -20,7 +22,7 @@ const CompanyPage = async ({
   const description = '';
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <PageHeader header={header} description={description} />
       <div className="w-full h-full flex justify-center items-center border border-t-0">
         <ResizablePanelGroup
@@ -33,7 +35,7 @@ const CompanyPage = async ({
             <div >
               <div className="flex justify-between px-4 py-2">
                 <h1 className="text-lg font-bold">Divisions</h1>
-                <DivisionAddNewButton />
+                <DivisionAddNewButton company={company} />
               </div>
               <Separator />
               <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -145,7 +147,7 @@ const CompanyPage = async ({
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
-    </>
+    </Suspense>
   );
 };
 

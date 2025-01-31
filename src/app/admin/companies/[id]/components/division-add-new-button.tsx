@@ -2,17 +2,19 @@
 
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
+import { Company } from "@/lib/interfaces/company-interfaces";
 
-// interface DtCompaniesAddNewButtonProps<TData> {
-//     table: Table<TData>
-// }
+interface DivisionAddNewButtonProps {
+    company: Company;
+  }
 
-export function DivisionAddNewButton(
-) {
+export const DivisionAddNewButton: React.FC<DivisionAddNewButtonProps> = ({company}) => {
+    // const company = (await params).company;
     const route = useRouter()
+    
     return (
-        <Button variant="outline" size="sm" onClick={()=>{ route.push('/admin/companies/create')}}>
+        <Button variant="outline" size="sm" onClick={()=>{ route.push(`/admin/companies/${company?.id}/division/create`)}}>
             <Plus /> Add New
         </Button>
     )
