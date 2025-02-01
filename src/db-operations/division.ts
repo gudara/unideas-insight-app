@@ -20,7 +20,7 @@ export async function create(company: Company, data: CreateDivisionFormData, use
     if (!!divisionEx) {
         return {
             errors: {
-                name: "This company already exists"
+                name: "This division already exists"
             }
         }
     }
