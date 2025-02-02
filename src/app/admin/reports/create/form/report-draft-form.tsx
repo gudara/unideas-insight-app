@@ -155,7 +155,7 @@ export const ReportDraftForm: React.FC<Props> = ({ report }) => {
                             <FormItem>
                                 <FormLabel>Work Group</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="" {...field} />
+                                    {/* <Input placeholder="" {...field} /> */}
                                 </FormControl>
                                 <FormDescription>
                                     Categarize report under this. It may be easy to browse the group
