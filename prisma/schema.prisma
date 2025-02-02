@@ -87,6 +87,6 @@ model Report {
   createdBy     String       @db.VarChar(50)
   lastUpdatedBy String?      @db.VarChar(50)
   status        ReportStatus @default(Enable)
-  WorkGroup     WorkGroup    @relation(fields: [workGroupId], references: [id])
+  workGroup     WorkGroup    @relation(fields: [workGroupId], references: [id])
   workGroupId   Int
 }

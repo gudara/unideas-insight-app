@@ -1,20 +1,18 @@
 'use client';
-
-import { CompanyDraftForm } from '@/app/admin/companies/create/forms/company-draft-form';
-import { Company } from '@/lib/interfaces/company-interfaces';
 import PageHeader from '@/components/page-header';
 import { Suspense } from 'react';
 import LoadingComponent from './loading';
+import { ReportDraftForm } from './form/report-draft-form';
 
 export default function CreateCompanyPage() {
-    const company: Company | null = null;
+    const data: Report | null = null;
 
-    const header =  'Create a new company';
-    const description =  'Register a new company';
+    const header =  'Create a new report';
+    const description =  'Register and configure a new Powerbi reports hear';
     return (
         <Suspense fallback={<LoadingComponent />}>
             <PageHeader header={header} description={description} />
-            <CompanyDraftForm company={company} />
+            <ReportDraftForm report={data} />
         </ Suspense>
     )
 }
