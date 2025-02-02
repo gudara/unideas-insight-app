@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
-import Loading from "../loading";
+import LoadingComponent from "../loading";
 import { DivisionAddNewButton } from "../components/division-add-new-button";
 
 const DivisionPage = async ({
@@ -20,7 +20,7 @@ const DivisionPage = async ({
     const description = 'List of divisions assign to the particular company';
 
     return (
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<LoadingComponent />}>
             <PageHeader header={header} description={description} />
             <div className="w-full h-full flex justify-center items-center border border-t-0">
 
