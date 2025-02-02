@@ -18,8 +18,17 @@ enum CompanyStatus {
   Disable
 }
 
-
 enum DivisionStatus {
+  Enable
+  Disable
+}
+
+enum WorkGroupStatus {
+  Enable
+  Disable
+}
+
+enum ReportStatus {
   Enable
   Disable
 }
@@ -41,17 +50,43 @@ model Company {
 }
 
 model Division {
-  id                Int           @id @default(autoincrement())
+  id                Int            @id @default(autoincrement())
   companyId         Int
-  name              String        @unique @db.VarChar(50)
-  contactPersonName String        @db.VarChar(100)
-  address           String?       @db.VarChar(200)
-  contactNumber     String?       @db.VarChar(20)
-  contactEmail      String?       @unique @db.VarChar(50)
-  company           Company?      @relation(fields: [companyId], references: [id])
-  createdAt         DateTime      @default(now())
-  lastUpdated       DateTime      @updatedAt
-  createdBy         String        @db.VarChar(50)
-  lastUpdatedBy     String?       @db.VarChar(50)
+  name              String         @unique @db.VarChar(50)
+  contactPersonName String         @db.VarChar(100)
+  address           String?        @db.VarChar(200)
+  contactNumber     String?        @db.VarChar(20)
+  contactEmail      String?        @unique @db.VarChar(50)
+  company           Company?       @relation(fields: [companyId], references: [id])
+  createdAt         DateTime       @default(now())
+  lastUpdated       DateTime       @updatedAt
+  createdBy         String         @db.VarChar(50)
+  lastUpdatedBy     String?        @db.VarChar(50)
   status            DivisionStatus @default(Enable)
+}
+
+model WorkGroup {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique @db.VarChar(150)
+  createdAt     DateTime?        @default(now())
+  lastUpdated   DateTime?        @updatedAt
+  createdBy     String?         @db.VarChar(50)
+  lastUpdatedBy String?         @db.VarChar(50)
+  status        WorkGroupStatus? @default(Enable)
+  Reports       Report[]
+}
+
+model Report {
+  id            Int          @id @default(autoincrement())
+  name          String       @unique @db.VarChar(150)
+  description   String?      @db.VarChar(200)
+  reportId      String       @unique @db.VarChar(50)
+  workspaceId   String       @db.VarChar(50)
+  createdAt     DateTime     @default(now())
+  lastUpdated   DateTime     @updatedAt
+  createdBy     String       @db.VarChar(50)
+  lastUpdatedBy String?      @db.VarChar(50)
+  status        ReportStatus @default(Enable)
+  WorkGroup     WorkGroup    @relation(fields: [workGroupId], references: [id])
+  workGroupId   Int
 }

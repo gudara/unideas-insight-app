@@ -18,7 +18,7 @@ const tasks: NavAdminTask[] = [
   {
     name: "Reports",
     description: "Register and maintain Power BI reports",
-    url: "#",
+    url: "/admin/reports",
     icon: 'FileSliders',
     isActive: false
   },

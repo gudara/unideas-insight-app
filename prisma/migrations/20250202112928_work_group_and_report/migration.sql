@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "WorkGroup" ALTER COLUMN "createdAt" DROP NOT NULL,
+ALTER COLUMN "lastUpdated" DROP NOT NULL,
+ALTER COLUMN "createdBy" DROP NOT NULL,
+ALTER COLUMN "status" DROP NOT NULL;
