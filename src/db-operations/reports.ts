@@ -58,9 +58,9 @@ export async function create(data: CreateReportFormData, user: any) {
             const reportData = {
                 ...data,
                 createdBy: user.username,
-                WorkGroup: {
+                workGroup: {
                     connect: {
-                        id: data.workGroup?.id
+                        id: data.workGroup.id
                     },
                 },
             };
@@ -73,7 +73,7 @@ export async function create(data: CreateReportFormData, user: any) {
             const reportData = {
                 ...data,
                 createdBy: user.username,
-                WorkGroup: {
+                workGroup: {
                     create: {
                         name: data.workGroup?.name,
                         createdBy: user.username,
