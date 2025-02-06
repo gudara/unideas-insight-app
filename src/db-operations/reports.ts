@@ -32,21 +32,28 @@ export async function create(data: CreateReportFormData, user: any) {
     if (!!rep2) {
         return {
             errors: {
-                reportId: "This report id already exists"
+                reportId: "The powerbi report id already exists"
             }
         }
     }
 
-    if (!data.workGroup.id) {
+    if (data.workGroupId === 0) {
+        if(!data.workGroupName){
+            return {
+                errors: {
+                    workGroupId: "New work group name not found"
+                }
+            }
+        }
         const wgUni = await prisma.workGroup.findFirst({
             where: {
-                name: data.workGroup.name
+                name: data.workGroupName
             }
         });
         if (!!wgUni) {
             return {
                 errors: {
-                    workGroup: "This already exists, please select exesisting record"
+                    workGroupId: "This work group name already exists, please select exesisting record"
                 }
             }
         }
@@ -54,13 +61,16 @@ export async function create(data: CreateReportFormData, user: any) {
 
     try {
         let report: any;
-        if (data.workGroup.id) {
+        if (data.workGroupId) {
             const reportData = {
-                ...data,
+                name: data.name,
+                description: data.description,
+                reportId: data.reportId,
+                workspaceId: data.workspaceId,
                 createdBy: user.username,
                 workGroup: {
                     connect: {
-                        id: data.workGroup.id
+                        id: data.workGroupId
                     },
                 },
             };
@@ -71,11 +81,14 @@ export async function create(data: CreateReportFormData, user: any) {
         else {
 
             const reportData = {
-                ...data,
+                name: data.name,
+                description: data.description,
+                reportId: data.reportId,
+                workspaceId: data.workspaceId,
                 createdBy: user.username,
                 workGroup: {
                     create: {
-                        name: data.workGroup?.name,
+                        name: data.workGroupName ? data.workGroupName : '',
                         createdBy: user.username,
                     },
                 },
@@ -149,10 +162,10 @@ export async function update(id: number, data: CreateReportFormData, user: any) 
         }
     }
 
-    if (!data.workGroup.id) {
+    if (!data.workGroupId) {
         const wgUni = await prisma.workGroup.findFirst({
             where: {
-                name: data.workGroup.name
+                name: data.workGroupName
             }
         });
         if (!!wgUni) {
@@ -167,13 +180,15 @@ export async function update(id: number, data: CreateReportFormData, user: any) 
 
     try {
         let report;
-        if (data.workGroup.id) {
+        if (data.workGroupId) {
             const reportData = {
-                ...data,
+                description: data.description,
+                reportId: data.reportId,
+                workspaceId: data.workspaceId,
                 lastUpdatedBy: user.username,
                 WorkGroup: {
                     connect: {
-                        id: data.workGroup?.id
+                        id: data.workGroupId
                     },
                 },
             };
@@ -184,11 +199,13 @@ export async function update(id: number, data: CreateReportFormData, user: any) 
         }
         else {
             const reportData = {
-                ...data,
+                description: data.description,
+                reportId: data.reportId,
+                workspaceId: data.workspaceId,
                 lastUpdatedBy: user.username,
                 WorkGroup: {
                     create: {
-                        name: data.workGroup?.name,
+                        name: data.workGroupName,
                         createdBy: user.username,
                     },
                 },

@@ -1,7 +1,8 @@
 // lib/prisma.ts
-import { Company, Prisma, PrismaClient } from '@prisma/client';
+import { Company, PrismaClient } from '@prisma/client';
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
+import { AdvanceColumnFilters } from './interfaces/data-table-interfaces';
 
 let prisma: PrismaClient;
 
@@ -67,12 +68,17 @@ export async function commonSearch(
 
 }
 
-export function generateWhereByRQColumnFiltersState(columnFilters: ColumnFiltersState | undefined): any {
+export function generateWhereByRQColumnFiltersState(columnFilters: AdvanceColumnFilters[] | undefined): any {
   // filter string convert to where
   let whereString = '{';
   columnFilters?.map(item => {
     if (typeof item.value === 'string') {
-      whereString = ` ${whereString} "${item.id}" : { "contains" : "${item.value}", "mode": "insensitive" },`;
+      if(item.condition === 'equal'){
+        whereString = ` ${whereString} "${item.id}" : { "equals" : "${item.value}" },`;
+      }
+      else{ // default condition
+        whereString = ` ${whereString} "${item.id}" : { "contains" : "${item.value}", "mode": "insensitive" },`;
+      }
     }
     else if (Array.isArray(item.value)) {
       if (item.value?.length) {
@@ -80,6 +86,7 @@ export function generateWhereByRQColumnFiltersState(columnFilters: ColumnFilters
       }
     }
   });
+  console.log(whereString)
 
   whereString = `${whereString.replace(/,\s*$/, "")} }`;
   return JSON.parse(whereString);
@@ -134,7 +141,7 @@ export function errorHandler(error: any): { error: string } {
 
 export function comonSearchByTabelStateData(
   modelName: ModelNames,
-  columnFilters: ColumnFiltersState | undefined,
+  columnFilters: AdvanceColumnFilters[] | undefined,
   sorting: SortingState | undefined,
   pagination: PaginationState | undefined
 ): Promise<{ total: number, data: any[], error?: string | null }> {

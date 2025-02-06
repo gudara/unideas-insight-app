@@ -5,22 +5,18 @@ import { Report } from "@/lib/interfaces/report-interface";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { updateReport, createReport } from "./form-actions";
-import React, { useActionState, useEffect, useRef, useState } from "react";
-import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
+import React, { useActionState, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { reportCreateFormSchema } from "../../zod-schemas";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { WorkGroupSelect } from "./work-group-select";
 import { WorkGroup } from "@/lib/interfaces/work-group-interface";
-import { WorkGroupStatus } from "@prisma/client";
 
 type Props = {
-    report?: Report | null;
-    workGroups: WorkGroup[]
+    report?: Report | null
 };
 type StateType = {
     data?: Report;
@@ -28,22 +24,10 @@ type StateType = {
     error?: string | null;
 };
 
-export const ReportDraftForm: React.FC<Props> = ({ report, workGroups }) => {
+export const ReportDraftForm: React.FC<Props> = ({ report }) => {
     const { toast } = useToast();
     const router = useRouter();
-    const [isNewWg, setIsNewWg] = useState(false)
-    const [newWg, setNewWg] = useState<WorkGroup>({
-        id: -1,
-        name : '' ,
-        status: WorkGroupStatus.Enable
-    })
-    const newWGInputRef = useRef<HTMLInputElement>(null);
-    useEffect(() => {
-        // Focus the input when the component mounts
-        if (newWGInputRef.current) {
-            newWGInputRef.current.focus();
-        }
-      }, [isNewWg]);
+    const [selectedWorkGroup, setSelectedWorkgroup] = useState<WorkGroup | null>(null);
 
     const form = useForm<z.infer<typeof reportCreateFormSchema>>({
         resolver: zodResolver(reportCreateFormSchema),
@@ -52,64 +36,48 @@ export const ReportDraftForm: React.FC<Props> = ({ report, workGroups }) => {
             description: "",
             reportId: "",
             workspaceId: "",
-            workGroup: {}
+            workGroupId: undefined,
+            workGroupName: undefined,
         }
     });
 
     const [state, dispatch, isPending] = useActionState(
         async (previous: undefined | StateType, payload: FormData) => {
-            let result;
+            let result = undefined;
             if (!!previous?.data?.id) {
                 result = await updateReport(previous.data.id, payload)
             }
             else {
-                result = await createReport(payload)
+                result = await createReport(payload);
             }
-            if (!result.error && !result.errors) {
+            if (result && !result.error && !result.errors) {
+                alert("DDDDDD")
                 toast({
                     title: "Done",
                     description: "Successfully Saved.",
                 });
-                router.push(`/admin/companies/${result.data.id}`);
+                router.push(`/admin/reports/${result.data.id}`);
             }
             return result;
         }, { data: report }
     );
 
     const action = async (formData: FormData) => {
+        if (selectedWorkGroup) {
+            formData.append("workGroupName", selectedWorkGroup?.name);
+            formData.append("workGroupId", selectedWorkGroup?.id.toString());
+        }
         dispatch(formData);
-
     }
 
-    function preperAddNewWg() {
-        setIsNewWg(true);
-        // newWGInputRef.current?.focus();
-    }
-
-    function settingNewWg(name: string) {
-        const newWg: WorkGroup = {
-            id: -1,
-            name : name ,
-            status: WorkGroupStatus.Enable
-        }
-        setNewWg(newWg);
-        
-    }
-
-    function addNewWg(): void {
-        const i = workGroups?.findIndex(a=> a.id === -1);
-        if(i > -1){
-            workGroups[i] = newWg;
-        }
-        else{
-            workGroups.push(newWg);
-        }
-        setIsNewWg(false);
+    const wgSelected = (workGroup: WorkGroup) => {
+        setSelectedWorkgroup(workGroup);
+        form.setValue("workGroupName", workGroup?.name);
+        form.setValue("workGroupId", +workGroup?.id);
     }
 
     return (
         <>
-
             <Form  {...form}>
                 <form action={action} className="space-y-2 mt-2 pt-2">
                     <FormField
@@ -195,98 +163,34 @@ export const ReportDraftForm: React.FC<Props> = ({ report, workGroups }) => {
 
                     <FormField
                         control={form.control}
-                        name="workGroup"
-                        defaultValue={state?.data?.workGroup}
+                        name="workGroupId"
+                        defaultValue={state?.data?.workGroupId}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Work Group</FormLabel>
-                                {/* <FormControl>
-                                    <Input placeholder="" {...field} />
-                                </FormControl> */}
+                                <FormControl>
+                                    <WorkGroupSelect
+                                        onSelect={(workgroup) => wgSelected(workgroup)}
+                                        selectedId={+field.value}
+                                        disabled={isPending}
+                                    />
+                                </FormControl>
+                                <input
+                                    type="hidden"
+                                    name="workGroupId"
+                                    defaultValue={state?.data?.workGroupId}
+                                />
 
-                                {
-                                    !isNewWg &&
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <FormControl>
-                                                <Button
-                                                    variant="outline"
-                                                    role="combobox"
-                                                    className={cn(
-                                                        "w-full justify-end",
-                                                        !field.value && "text-muted-foreground"
-                                                    )}
-                                                >
-                                                    {field.value
-                                                        ? workGroups.find(
-                                                            (wg) => wg.name === field.name
-                                                        )?.name
-                                                        : "Select work group"}
-                                                    <ChevronsUpDown className="opacity-50" />
-                                                </Button>
-                                            </FormControl>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-full p-0">
-                                            <Command>
-                                                <CommandInput
-                                                    placeholder="Search work group."
-                                                    className="h-9"
-                                                />
-                                                <CommandList>
-                                                    <CommandEmpty>No work group found.</CommandEmpty>
-                                                    <CommandGroup>
-                                                        {workGroups.map((wg) => (
-                                                            <CommandItem
-                                                                value={wg.name}
-                                                                key={wg.id}
-                                                                onSelect={() => {
-                                                                    form.setValue("workGroup", wg.id)
-                                                                }}
-                                                            >
-                                                                {wg.id > 0 ?  wg.name : `(NEW) ${wg.name}`}
-                                                                <Check
-                                                                    className={cn(
-                                                                        "ml-auto",
-                                                                        wg.name === field.name
-                                                                            ? "opacity-100"
-                                                                            : "opacity-0"
-                                                                    )}
-                                                                />
-                                                            </CommandItem>
-                                                        ))}
-                                                    </CommandGroup>
-
-                                                    <CommandGroup >
-                                                        <CommandItem
-                                                            onSelect={() => {
-                                                                preperAddNewWg()
-                                                            }}
-                                                        >
-                                                            (ADD NEW)
-                                                        </CommandItem>
-                                                    </CommandGroup>
-                                                </CommandList>
-                                            </Command>
-                                        </PopoverContent>
-                                    </Popover>
-                                }
-                                {
-                                    isNewWg &&
-                                    <Input 
-                                    ref={newWGInputRef}
-                                    placeholder="New work group" 
-                                    type="text" 
-                                    className="w-full"
-                                    onChange={(e)=> settingNewWg(e.target.value)}
-                                    onBlur={(e)=> addNewWg()}
-                                     />
-
-                                }
+                                <input
+                                    type="hidden"
+                                    name="workGroupName"
+                                    defaultValue={state?.data?.workGroup?.name}
+                                />
                                 <FormDescription>
-                                    Categarize report under this. It may be easy to browse the group
+                                    Categarize report under this. It will be easy to browse the group
                                 </FormDescription>
                                 <FormMessage>
-                                    {state?.errors?.contactEmail && <span>{state?.errors.contactEmail}</span>}
+                                    {state?.errors?.workGroupId && <span>{state?.errors.workGroupId}</span>}
                                 </FormMessage>
                             </FormItem>
                         )}

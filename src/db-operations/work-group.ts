@@ -1,6 +1,8 @@
+'use server'
 import { DataTableFilter } from "@/lib/interfaces/data-table-interfaces";
 import { WorkGroup } from "@/lib/interfaces/work-group-interface";
-import prisma, { comonSearchByTabelStateData } from '@/lib/prisma-common-utils';
+import { comonSearchByTabelStateData } from '@/lib/prisma-common-utils';
+import { WorkGroupStatus } from "@prisma/client";
 
 
 export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: WorkGroup[], error?: string | null }> {

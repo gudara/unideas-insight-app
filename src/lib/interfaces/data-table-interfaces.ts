@@ -1,7 +1,11 @@
-import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
+import { ColumnFilter,  PaginationState, SortingState } from "@tanstack/react-table";
 
 export interface DataTableFilter {
     sorting?: SortingState,
-    columnFilters?: ColumnFiltersState,
+    columnFilters?: AdvanceColumnFilters[],
     pagination?: PaginationState
+}
+
+export interface AdvanceColumnFilters extends ColumnFilter{
+    condition?: 'equal' | 'contains' | 'in'
 }

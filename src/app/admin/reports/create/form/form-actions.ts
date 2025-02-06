@@ -18,7 +18,7 @@ export async function createReport(formData: any) {
 
     //validate using zod
     const currentFormData = Object.fromEntries(formData);
-    const validate = reportCreateFormSchema.safeParse(currentFormData);
+    const validate = reportCreateFormSchema.safeParse({...currentFormData, workGroupId: +currentFormData.workGroupId});
     if (!validate.success) {
         const formFieldErrors = validate.error.flatten().fieldErrors;
         return {
@@ -27,7 +27,8 @@ export async function createReport(formData: any) {
                 description: formFieldErrors?.description,
                 reportId: formFieldErrors?.reportId,
                 workspaceId: formFieldErrors?.workspaceId,
-                workGroup: formFieldErrors?.workGroup
+                workGroupId: formFieldErrors?.workGroupId,
+                workGroupName: formFieldErrors?.workGroupName,
             },
         };
     }
@@ -57,7 +58,7 @@ export async function updateReport(id: number, formData: any): Promise<any> {
                 description: formFieldErrors?.description,
                 reportId: formFieldErrors?.reportId,
                 workspaceId: formFieldErrors?.workspaceId,
-                workGroup: formFieldErrors?.workGroup
+                workGroupId: formFieldErrors?.workGroupId
             },
         };
     }

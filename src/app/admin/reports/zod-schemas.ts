@@ -1,9 +1,5 @@
 import { z } from "zod";
 
-const newWorkGroupSchema = z.object({
-    name: z.string().nonempty( "Workgroup name is required"),
-});
-
 export const reportCreateFormSchema = z.object({
     name: z.string()
         .nonempty({
@@ -12,16 +8,17 @@ export const reportCreateFormSchema = z.object({
     description: z.string(),
     reportId: z.string()
         .nonempty({
-            message: "The address is required."
+            message: "The report id is required."
         }),
     workspaceId: z.string()
         .nonempty({
-            message: "The contact person number is required."
+            message: "The workspace id is required."
         }),
-    workGroup: z.union([
-        z.number().positive("Workgroup ID must be a positive number"), // Selecting an existing workgroup by ID
-        newWorkGroupSchema, // Creating a new workgroup with required fields
-    ]),
+    workGroupId: z.number().min(0, "Please select a workgroup"),
+    workGroupName: z.string()
+        .nonempty({
+            message: "The work group name is required."
+        }),
 })
 
 

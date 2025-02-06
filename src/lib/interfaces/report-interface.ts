@@ -19,5 +19,6 @@ export interface CreateReportFormData {
     reportId: string;
     workspaceId: string;
     status: 'Enable' | 'Disable';
-    workGroup: WorkGroup;
+    workGroupId: number;
+    workGroupName?: string;
 }
