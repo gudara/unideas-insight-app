@@ -86,7 +86,6 @@ export function generateWhereByRQColumnFiltersState(columnFilters: AdvanceColumn
       }
     }
   });
-  console.log(whereString)
 
   whereString = `${whereString.replace(/,\s*$/, "")} }`;
   return JSON.parse(whereString);

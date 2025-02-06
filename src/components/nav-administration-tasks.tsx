@@ -24,25 +24,15 @@ export const NavAdministrationTasks = () => {
   const { data: adminTasks } = useQuery({
     queryKey: ['admin-tasks'],
     queryFn: async () => {
-        return await getAdminTasks()
-        // return []
+      return await getAdminTasks()
+      // return []
     }
   })
 
-  useEffect(() => {
-    function checkActive() {
-      if (adminTasks?.length) {
-        adminTasks?.map((a: NavAdminTask) => {
-          a.isActive = pathname.startsWith(a.url.trim());
-          return a;
-        });
-      }
-    }
-    checkActive()
-  }, [pathname, adminTasks]);
 
-  // Dynamically import icons from lucide-react
-
+  const isActive = (path: string)=>{
+    return pathname.startsWith(path.trim());
+  }
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -60,11 +50,11 @@ export const NavAdministrationTasks = () => {
           <SidebarMenu>
             {adminTasks?.map((item) => (
               <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton asChild isActive={item.isActive}>
+                <SidebarMenuButton asChild isActive={isActive(item.url)}>
                   <Link href={item.url}>
                     {/* <DynamicIcon name={item.icon} /> */}
                     <DynamicIcon iconName={item.icon} size={16}></DynamicIcon>
-                    <span>{item.name} </span>
+                    <span>{item.name}</span>
                   </Link>
                 </SidebarMenuButton>
                 {/* <DropdownMenu>
