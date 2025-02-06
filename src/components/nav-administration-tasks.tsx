@@ -13,8 +13,6 @@ import DynamicIcon from './dynamic-icon';
 import LoaderComponent from '@/components/loader-component';
 import { useQuery } from '@tanstack/react-query';
 import { getAdminTasks } from '@/app/admin/get-admin-tasks-json';
-import { useEffect } from 'react';
-import { NavAdminTask } from '@/app/interfaces';
 
 export const NavAdministrationTasks = () => {
 

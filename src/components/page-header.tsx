@@ -16,7 +16,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ header, description }) => {
                     {typeof description === 'string' ? description : description}
                 </div>
             </div>
-            <Separator className="mb-0" />
+            {/* <Separator className="mb-0" /> */}
         </>
     );
 };
