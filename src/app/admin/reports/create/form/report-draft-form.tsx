@@ -51,12 +51,11 @@ export const ReportDraftForm: React.FC<Props> = ({ report }) => {
                 result = await createReport(payload);
             }
             if (result && !result.error && !result.errors) {
-                alert("DDDDDD")
                 toast({
                     title: "Done",
                     description: "Successfully Saved.",
                 });
-                router.push(`/admin/reports/${result.data.id}`);
+                router.push(`/admin/reports/`);
             }
             return result;
         }, { data: report }
