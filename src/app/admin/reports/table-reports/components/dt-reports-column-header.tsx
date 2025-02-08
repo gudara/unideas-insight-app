@@ -17,10 +17,15 @@ export function DtReportsColumnHeader<Report, TValue>({
     column,
     title,
     className,
-    showHideOption
+    showHideOption,
 }: DtReportsColumnHeaderProps<Report, TValue>) {
     if (!column.getCanSort()) {
-        return <div className={cn(className)}>{title}</div>
+        return <div className={cn(className)}>
+            <Button
+                variant="ghost"
+                size="sm"
+                className="-ml-1 h-8 data-[state=open]:bg-accent"
+            >{title}</Button></div>
     }
 
     return (

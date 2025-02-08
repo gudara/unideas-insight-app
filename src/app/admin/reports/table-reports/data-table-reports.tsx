@@ -21,6 +21,7 @@ import LoaderComponent from "@/components/loader-component";
 import { search } from "@/db-operations/reports";
 import { DtReportsToolbar } from "./components/dt-reports-toolbar";
 import { DtReportsPagination } from "./components/dt-reports-pagination";
+import { Report } from "@/lib/interfaces/report-interface"
 
 interface DataTableReportsProps<TData, TValue> {
   columns: ColumnDef<Report, any>[],
@@ -28,23 +29,27 @@ interface DataTableReportsProps<TData, TValue> {
 
 export function DataTableReports<TData, TValue>({
   columns
-}: DataTableReportsProps<TData , TValue>) {
+}: DataTableReportsProps<TData, TValue>) {
   // const [setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
-  const [pageCount, setPageCount] = useState<number>(0);
-  // let queryData: Company[] = []
+  // const [pageCount, setPageCount] = useState<number>(0);
+  const joinSchemas = ['workGroup']
 
-  const { data = {total: 0, data: [], error: null}, isLoading } = useQuery<{
+  const { data = { total: 0, data: [], error: null }, isLoading } = useQuery<{
     total: number;
     data: Report[];
     error?: string | null;
-}>({
+  }>({
     queryKey: ['reports', sorting, columnFilters, pagination],
     queryFn: async () => {
-      const d = await search({ sorting, columnFilters, pagination })
-      return d?.data?.length ? d : {total: 0, data: [], error: null};
+      const d = await search({ sorting, columnFilters, pagination, joinSchemas })
+      return d?.data?.length
+        ? {...d, data: d.data?.map(r=> {
+          return {...r, workGroupName: r.workGroup.name}
+        })}
+        : { total: 0, data: [], error: null };
 
     },
 
@@ -116,7 +121,7 @@ export function DataTableReports<TData, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center text-gray-400"
                   >
-                      <LoaderComponent />
+                    <LoaderComponent />
                   </TableCell>
                 </TableRow>
               ) : table.getRowModel().rows?.length ? (

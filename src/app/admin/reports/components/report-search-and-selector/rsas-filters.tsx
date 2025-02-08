@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
-import { WorkGroup } from "@/lib/interfaces/work-group-interface";
 import { AdvanceColumnFilter } from "@/lib/interfaces/data-table-interfaces";
 import { Input } from "@/components/ui/input";
 import { WorkGroupSelect } from "../work-group-select";
@@ -20,7 +19,7 @@ export default function RsasFilters({
     const [stetusFilter, setStatusFilter] = useState<AdvanceColumnFilter | undefined>(undefined);
 
     useEffect(() => {
-        let filters: AdvanceColumnFilter[] = [];
+        const filters: AdvanceColumnFilter[] = [];
         nameFilter ? filters.push(nameFilter) : false;
         wgFilter ? filters.push(wgFilter) : false;
         stetusFilter ? filters.push(stetusFilter) : false;

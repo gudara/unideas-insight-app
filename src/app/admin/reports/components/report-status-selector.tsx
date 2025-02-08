@@ -26,9 +26,9 @@ export function ReportStatusSelector<TData, TValue>({
     const [sval, setSval] = React.useState<string[]>([])
     const selectedValues = column ? new Set(column?.getFilterValue() as string[]) : new Set(sval);
 
-    React.useEffect(() => {
-        onChange(sval)
-    }, [sval]);
+    // React.useEffect(() => {
+    //     onChange(sval)
+    // }, [sval]);
 
     return (
         <Popover>
@@ -95,6 +95,7 @@ export function ReportStatusSelector<TData, TValue>({
                                                 )
                                             }
                                             setSval(filterValues.length ? filterValues : [])
+                                            onChange(sval)
                                         }}
                                     >
                                         <div

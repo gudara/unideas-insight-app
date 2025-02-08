@@ -39,7 +39,8 @@ export async function commonSearch(
   skip: number,
   take: number,
   where: any,
-  orderBy: any
+  orderBy: any,
+  joinObj: any
 ): Promise<{ total: number, data: any[], error?: string | null }> {
   const model = prisma[modelName] as any;
   try {
@@ -52,7 +53,11 @@ export async function commonSearch(
       skip: skip ?? 0,
       take: take ?? 10,
       where: where ?? {},
-      orderBy: orderBy ?? {}
+      orderBy: orderBy ?? {},
+      // relationLoadStrategy: !!joinSchemas ? 'join' : null,
+
+      include: joinObj
+
     });
     return { data, total, error: null }
     // } 
@@ -73,10 +78,10 @@ export function generateWhereByRQColumnFiltersState(columnFilters: AdvanceColumn
   let whereString = '{';
   columnFilters?.map(item => {
     if (typeof item.value === 'string' || typeof item.value === 'number') {
-      if(item.condition === 'equal'){
+      if (item.condition === 'equal') {
         whereString = ` ${whereString} "${item.id}" : { "equals" : "${item.value}" },`;
       }
-      else{ // default condition
+      else { // default condition
         whereString = ` ${whereString} "${item.id}" : { "contains" : "${item.value}", "mode": "insensitive" },`;
       }
     }
@@ -105,6 +110,18 @@ export function generateLimitByRQPaginationState(pagination: PaginationState | u
   const skip = (typeof pagination?.pageIndex !== "undefined" || typeof pagination?.pageSize !== "undefined") ? (+pagination.pageIndex * +pagination.pageSize) : 0;
   const take = (typeof pagination?.pageSize !== "undefined") ? (+pagination.pageSize) : 10;
   return { skip, take }
+}
+
+export function generateJoinByRQJoinStringArray(joinSchemas: string[] | undefined): any {
+  if (joinSchemas && joinSchemas.length) {
+    let jointring = '{';
+    joinSchemas?.map(item => {
+      jointring = `${jointring} "${item}": true,`;
+    })
+    jointring = `${jointring.replace(/,\s*$/, "")} }`;
+    return JSON.parse(jointring);
+  }
+  return null
 }
 
 export function errorHandler(error: any): { error: string } {
@@ -142,7 +159,8 @@ export function comonSearchByTabelStateData(
   modelName: ModelNames,
   columnFilters: AdvanceColumnFilter[] | undefined,
   sorting: SortingState | undefined,
-  pagination: PaginationState | undefined
+  pagination: PaginationState | undefined,
+  joinSchemas: string[] | undefined
 ): Promise<{ total: number, data: any[], error?: string | null }> {
   // filter convert to where
   const where = generateWhereByRQColumnFiltersState(columnFilters)
@@ -150,6 +168,8 @@ export function comonSearchByTabelStateData(
   const orderBy = generateOrderByByRQSortingState(sorting)
   //pagination  convert to skip and take by
   const { skip, take } = generateLimitByRQPaginationState(pagination)
-  return commonSearch(modelName, skip, take, where, orderBy)
+  const joinObj = generateJoinByRQJoinStringArray(joinSchemas);
+  // console.log("++++++++++++", joinObj)
+  return commonSearch(modelName, skip, take, where, orderBy, joinObj)
 }
 

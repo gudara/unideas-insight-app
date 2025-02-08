@@ -44,6 +44,22 @@ export const columns: ColumnDef<Report, any>[] = [
     },
   },
   {
+    accessorKey: "workGroupName",
+    header: ({ column }) => (
+      <DtReportsColumnHeader column={column} title="Work Group" showHideOption={false} />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("workGroupName")}
+          </span>
+        </div>
+      )
+    },
+    enableSorting: false
+  },
+  {
     accessorKey: "reportId",
     header: ({ column }) => (
       <DtReportsColumnHeader column={column} title="Report Id" showHideOption={false} />

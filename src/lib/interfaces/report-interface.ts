@@ -10,7 +10,8 @@ export interface Report extends BaseInterface {
     workspaceId: string;
     status: ReportStatus;
     workGroup: WorkGroup;
-    workGroupId: number
+    workGroupId: number;
+    workGroupName?: string;
 }
 
 export interface CreateReportFormData {

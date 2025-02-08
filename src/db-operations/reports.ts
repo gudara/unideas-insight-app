@@ -2,6 +2,7 @@
 import prisma, { errorHandler, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
 import { DataTableFilter } from '@/lib/interfaces/data-table-interfaces';
 import { CreateReportFormData } from '@/lib/interfaces/report-interface';
+import { Report } from '@/lib/interfaces/report-interface';
 
 export async function create(data: CreateReportFormData, user: any) {
 
@@ -231,6 +232,6 @@ export async function get(id: number) {
     return commonGet('report', id)
 }
 
-export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: Report[], error?: string | null }> {
-    return comonSearchByTabelStateData('report', columnFilters, sorting, pagination)
+export async function search({ sorting, columnFilters, pagination, joinSchemas }: DataTableFilter): Promise<{ total: number, data: Report[], error?: string | null }> {
+    return comonSearchByTabelStateData('report', columnFilters, sorting, pagination, joinSchemas)
 }
