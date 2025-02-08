@@ -1,10 +1,10 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MapPin, Phone } from "lucide-react";
 import { DtReportsColumnHeader } from "./components/dt-reports-column-header";
 import { reportStatuses } from "./report-meta-data";
 import { DtReportsRowActions } from "./components/dt-reports-row-actions";
+import { Report } from "@/lib/interfaces/report-interface"
 
 
 export const columns: ColumnDef<Report, any>[] = [
