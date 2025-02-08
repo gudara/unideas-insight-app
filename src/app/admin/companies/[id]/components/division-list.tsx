@@ -6,7 +6,7 @@ import { DataTableFilter } from "@/lib/interfaces/data-table-interfaces";
 import { Division } from "@/lib/interfaces/division-interfaces";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React from "react";
 
 interface DivisionListProps {
     company: Company;

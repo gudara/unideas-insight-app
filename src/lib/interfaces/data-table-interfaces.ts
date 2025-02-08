@@ -2,10 +2,10 @@ import { ColumnFilter,  PaginationState, SortingState } from "@tanstack/react-ta
 
 export interface DataTableFilter {
     sorting?: SortingState,
-    columnFilters?: AdvanceColumnFilters[],
+    columnFilters?: AdvanceColumnFilter[],
     pagination?: PaginationState
 }
 
-export interface AdvanceColumnFilters extends ColumnFilter{
+export interface AdvanceColumnFilter extends ColumnFilter{
     condition?: 'equal' | 'contains' | 'in'
 }

@@ -2,11 +2,10 @@
 
 import { Table } from "@tanstack/react-table"
 import { Search, X } from "lucide-react"
-import { statuses } from "../meta-data"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DtReportsFacetedFilter } from "./dt-reports-faceted-filter"
 import { DtReportsAddNewButton } from "./dt-reports-add-new-button"
+import { ReportStatusSelector } from "../../components/report-status-selector"
 
 interface DtReportsToolbarProps<TData> {
   table: Table<TData>
@@ -33,10 +32,10 @@ export function DtReportsToolbar<TData>({
         </div>
 
         {table.getColumn("status") && (
-          <DtReportsFacetedFilter
+          <ReportStatusSelector
             column={table.getColumn("status")}
             title="Status"
-            options={statuses}
+            onChange={()=> {}}
           />
         )}
         {/* {table.getColumn("priority") && (

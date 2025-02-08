@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { reportCreateFormSchema } from "../../zod-schemas";
-import { WorkGroupSelect } from "./work-group-select";
+import { WorkGroupSelect } from "../../components/work-group-select";
 import { WorkGroup } from "@/lib/interfaces/work-group-interface";
 
 type Props = {
@@ -172,6 +172,7 @@ export const ReportDraftForm: React.FC<Props> = ({ report }) => {
                                         onSelect={(workgroup) => wgSelected(workgroup)}
                                         selectedId={+field.value}
                                         disabled={isPending}
+                                        withAddNewButton={true}
                                     />
                                 </FormControl>
                                 <input

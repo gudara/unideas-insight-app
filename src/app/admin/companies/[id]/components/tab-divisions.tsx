@@ -1,74 +1,54 @@
 'use client'
 
-import { search } from "@/db-operations/division";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { Company } from "@/lib/interfaces/company-interfaces";
-import { DataTableFilter } from "@/lib/interfaces/data-table-interfaces";
-import { Division } from "@/lib/interfaces/division-interfaces";
-import { cn } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import { Separator } from "@radix-ui/react-separator";
+import { Search } from "lucide-react";
+import React from "react";
+import { DivisionAddNewButton } from "./division-add-new-button";
+import { DivisionList } from "./division-list";
+import { Input } from "@/components/ui/input";
 
 interface TabDivisionsProps {
     company: Company;
 }
 
-export const DivisionList: React.FC<TabDivisionsProps> = ({ company }) => {
+export const TabDivisions: React.FC<TabDivisionsProps> = ({ company }) => {
 
-    const filters: DataTableFilter = {
-        sorting: [{ id: 'name', desc: false }],
-        columnFilters: [{ id: 'companyId', value: company.id }],
-        pagination: { pageIndex: 0, pageSize: 200 }
-    }
-
-    const { data = { total: 0, data: [], error: null }, isLoading } = useQuery<{
-        total: number;
-        data: Division[];
-        error?: string | null;
-    }>({
-        queryKey: ['divisions', company, filters ? { ...filters } : '{}'],
-        queryFn: async () => {
-            const d = await search({ ...filters })
-            return d?.data?.length ? d : { total: 0, data: [], error: null };
-        },
-    })
 
     return (
         <>
-            <div className="flex flex-col gap-2 p-4 pt-0">
-                {
-                    data.data?.map((item) => (
-                        <button
-                            key={item.id}
-                            className={cn(
-                                "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-                                true && "bg-muted"
-                            )}
-
-                        >
-                            <div className="flex w-full flex-col gap-1">
-                                <div className="flex items-center">
-                                    <div className="flex items-center gap-2">
-                                        <div className="font-semibold">{item.name}</div>
-                                    </div>
-                                    <div
-                                        className={cn(
-                                            "ml-auto text-xs",
-                                            ''
-                                        )}
-                                    >
-                                        lksafdlsf
-                                    </div>
-                                </div>
-                                <div className="text-xs font-medium">Sub title hear</div>
-                            </div>
-                            <div className="line-clamp-2 text-xs text-muted-foreground">
-                                description hear
-                            </div>
-
-                        </button>
-                    ))
-                }
-            </div>
+            <ResizablePanelGroup
+                direction="horizontal"
+                className="min-h-full max-h-full max-w-full rounded"
+              >
+                <ResizablePanel
+                  defaultSize={25}
+                >
+                  <div >
+                    <div className="flex justify-between px-4 py-2">
+                      <h1 className="text-lg font-bold">Divisions</h1>
+                      {company && <DivisionAddNewButton company={company} />}
+                    </div>
+                    <Separator />
+                    <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                      <form>
+                        <div className="relative">
+                          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input placeholder="Search" className="pl-8" />
+                        </div>
+                      </form>
+                    </div>
+                    <DivisionList company={company} />
+                  </div>
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+                <ResizablePanel defaultSize={75}>
+                  <div className="flex h-full items-center justify-center p-6">
+                    <span className="font-semibold">Content</span>
+                  </div>
+                </ResizablePanel>
+              </ResizablePanelGroup>
         </>
     )
 

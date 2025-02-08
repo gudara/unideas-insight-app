@@ -2,7 +2,7 @@
 import { Company, PrismaClient } from '@prisma/client';
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
-import { AdvanceColumnFilters } from './interfaces/data-table-interfaces';
+import { AdvanceColumnFilter } from './interfaces/data-table-interfaces';
 
 let prisma: PrismaClient;
 
@@ -68,11 +68,11 @@ export async function commonSearch(
 
 }
 
-export function generateWhereByRQColumnFiltersState(columnFilters: AdvanceColumnFilters[] | undefined): any {
+export function generateWhereByRQColumnFiltersState(columnFilters: AdvanceColumnFilter[] | undefined): any {
   // filter string convert to where
   let whereString = '{';
   columnFilters?.map(item => {
-    if (typeof item.value === 'string') {
+    if (typeof item.value === 'string' || typeof item.value === 'number') {
       if(item.condition === 'equal'){
         whereString = ` ${whereString} "${item.id}" : { "equals" : "${item.value}" },`;
       }
@@ -140,7 +140,7 @@ export function errorHandler(error: any): { error: string } {
 
 export function comonSearchByTabelStateData(
   modelName: ModelNames,
-  columnFilters: AdvanceColumnFilters[] | undefined,
+  columnFilters: AdvanceColumnFilter[] | undefined,
   sorting: SortingState | undefined,
   pagination: PaginationState | undefined
 ): Promise<{ total: number, data: any[], error?: string | null }> {

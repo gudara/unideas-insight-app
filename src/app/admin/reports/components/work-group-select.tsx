@@ -27,10 +27,14 @@ export function WorkGroupSelect({
     onSelect,
     selectedId,
     disabled,
+    withAddNewButton,
+    placeHolderString
 }: {
     onSelect: (workgroup: WorkGroup) => void;
-    selectedId?: number;
+    selectedId?: number | null;
     disabled?: boolean;
+    withAddNewButton?: boolean;
+    placeHolderString?: string;
 }) {
     const [open, setOpen] = useState(false);
     const [searchString, setSearchString] = useState("");
@@ -60,7 +64,7 @@ export function WorkGroupSelect({
         }
     }, [selectedId, workgroups]);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (inputRef.current && isNewWg) {
             inputRef.current.focus(); // Focus the input element
         }
@@ -68,7 +72,7 @@ export function WorkGroupSelect({
 
     function newWgAdded(e: FocusEvent<HTMLInputElement, Element>) {
         setIsNewWg(false)
-        if(e.target.value !== ''){
+        if (e.target.value !== '') {
             const wg = {
                 name: e.target.value,
                 status: WorkGroupStatus.Enable,
@@ -89,7 +93,7 @@ export function WorkGroupSelect({
     function clickAddNewWg() {
         setSearchString("");
         setIsNewWg(true);
-        
+
     }
 
     return (
@@ -102,6 +106,7 @@ export function WorkGroupSelect({
                         <Button
                             variant="outline"
                             role="combobox"
+                            size="default"
                             aria-expanded={open}
                             className={cn(
                                 "w-full justify-between",
@@ -109,8 +114,10 @@ export function WorkGroupSelect({
                             )}
                             disabled={disabled}
                         >
-                            {selectedWorkGroup ? selectedWorkGroup.name : "Select a work group..."}
+                            <>
+                            {selectedWorkGroup ? selectedWorkGroup.name : placeHolderString ? <span className="text-muted-foreground">{placeHolderString}</span> : <span className="text-muted-foreground">Select a work group</span>}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </>
                         </Button>
 
                     </PopoverTrigger>
@@ -143,16 +150,21 @@ export function WorkGroupSelect({
                                     </CommandItem>
                                 ))}
                             </CommandGroup>
-                            <CommandSeparator />
-                            <CommandGroup>
-                                <CommandItem
-                                    className="text-blue-600 data-[selected=true]:text-blue-600"
-                                    onSelect={clickAddNewWg}
-                                >
-                                    <Plus className={`mr-2 h-4 w-4 opacity-100`} />
-                                    Add New
-                                </CommandItem>
-                            </CommandGroup>
+                            {
+                                withAddNewButton &&
+                                <>
+                                    <CommandSeparator />
+                                    <CommandGroup>
+                                        <CommandItem
+                                            className="text-blue-600 data-[selected=true]:text-blue-600"
+                                            onSelect={clickAddNewWg}
+                                        >
+                                            <Plus className={`mr-2 h-4 w-4 opacity-100`} />
+                                            Add New
+                                        </CommandItem>
+                                    </CommandGroup>
+                                </>
+                            }
                         </Command>
                     </PopoverContent>
                 </Popover>

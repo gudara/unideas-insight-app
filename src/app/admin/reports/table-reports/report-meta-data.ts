@@ -1,7 +1,14 @@
+
 import { ReportStatus } from "@prisma/client";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 
-export const statuses = [
+export interface ReportStatusObj {
+  label: ReportStatus;
+  value: string;
+  icon?: React.ComponentType<{ className?: string }>;
+}
+
+export const reportStatuses: ReportStatusObj[] = [
   {
     value: ReportStatus.Enable,
     label: "Enable",
