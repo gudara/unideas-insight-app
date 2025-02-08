@@ -66,12 +66,13 @@ model Division {
 }
 
 model WorkGroup {
-  id            Int             @id @default(autoincrement())
-  name          String          @unique @db.VarChar(150)
+  id            Int              @id @default(autoincrement())
+  name          String           @unique @db.VarChar(150)
+  icon          String           @db.VarChar(150) @default("User")
   createdAt     DateTime?        @default(now())
   lastUpdated   DateTime?        @updatedAt
-  createdBy     String?         @db.VarChar(50)
-  lastUpdatedBy String?         @db.VarChar(50)
+  createdBy     String?          @db.VarChar(50)
+  lastUpdatedBy String?          @db.VarChar(50)
   status        WorkGroupStatus? @default(Enable)
   Reports       Report[]
 }

@@ -8,7 +8,7 @@ import { DataTableReports } from "./table-reports/data-table-reports";
 
 export default async function ReportsPage() {
 
-  const header = 'Reports and Workgroups';
+  const header = 'Reports ';
   const description = 'Register and maintain Power BI reports';
   return (
     <>

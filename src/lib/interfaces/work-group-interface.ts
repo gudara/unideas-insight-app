@@ -6,3 +6,8 @@ export interface WorkGroup extends BaseInterface {
     name: string;
     status: WorkGroupStatus;
 }
+
+export interface CreateWorkGroupFormData {
+    name: string;
+    icon: string;
+}
