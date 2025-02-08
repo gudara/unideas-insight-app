@@ -160,7 +160,7 @@ export function comonSearchByTabelStateData(
   columnFilters: AdvanceColumnFilter[] | undefined,
   sorting: SortingState | undefined,
   pagination: PaginationState | undefined,
-  joinSchemas: string[] | undefined
+  joinSchemas: string[] | undefined = undefined
 ): Promise<{ total: number, data: any[], error?: string | null }> {
   // filter convert to where
   const where = generateWhereByRQColumnFiltersState(columnFilters)
