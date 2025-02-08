@@ -172,7 +172,6 @@ export const ReportDraftForm: React.FC<Props> = ({ report }) => {
                                         onSelect={(workgroup) => wgSelected(workgroup)}
                                         selectedId={+field.value}
                                         disabled={isPending}
-                                        withAddNewButton={true}
                                     />
                                 </FormControl>
                                 <input
