@@ -24,7 +24,7 @@ export default function RsasFilters({
         if(wgFilter) filters.push(wgFilter);
         if(stetusFilter) filters.push(stetusFilter);
         onFiltersChange(filters)
-    }, [nameFilter, wgFilter, stetusFilter]);
+    }, [nameFilter, wgFilter, stetusFilter, onFiltersChange]);
 
     function searchReportName(value: string) {
         if (value) {
@@ -69,8 +69,6 @@ export default function RsasFilters({
                                 onSelect={(workgroup) => changeWorkGroup(+workgroup.id)}
                                 selectedId={null}
                                 disabled={false}
-                                withAddNewButton={false}
-                                placeHolderString="Filter by work group"
                             />
                         </div>
                         <div className="justify-start">

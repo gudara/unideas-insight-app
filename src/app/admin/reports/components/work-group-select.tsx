@@ -56,7 +56,7 @@ export function WorkGroupSelect({
             const selected = workgroups.find((wg) => wg.id === selectedId);
             if (selected) setSelectedWorkgroup(selected);
         }
-    }, [selectedId, workgroups]);
+    }, [selectedId, workgroups, selectedWorkGroup?.id]);
 
 
 
