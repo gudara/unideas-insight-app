@@ -20,9 +20,9 @@ export default function RsasFilters({
 
     useEffect(() => {
         const filters: AdvanceColumnFilter[] = [];
-        nameFilter ? filters.push(nameFilter) : false;
-        wgFilter ? filters.push(wgFilter) : false;
-        stetusFilter ? filters.push(stetusFilter) : false;
+        if(nameFilter)  filters.push(nameFilter);
+        if(wgFilter) filters.push(wgFilter);
+        if(stetusFilter) filters.push(stetusFilter);
         onFiltersChange(filters)
     }, [nameFilter, wgFilter, stetusFilter]);
 
