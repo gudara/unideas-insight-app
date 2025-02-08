@@ -99,6 +99,6 @@ export async function get(id: number) {
 }
 
 export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: Division[], error?: string | null }> {
-    return comonSearchByTabelStateData('division' as any, columnFilters, sorting, pagination)
+    return comonSearchByTabelStateData('division' as any, columnFilters, sorting, pagination, undefined)
 }
 

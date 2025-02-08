@@ -5,7 +5,7 @@ import prisma, { comonSearchByTabelStateData, errorHandler } from '@/lib/prisma-
 
 
 export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: WorkGroup[], error?: string | null }> {
-    return comonSearchByTabelStateData('workGroup', columnFilters, sorting, pagination)
+    return comonSearchByTabelStateData('workGroup', columnFilters, sorting, pagination, undefined)
 }
 
 export async function create(data: CreateWorkGroupFormData, user: any) {

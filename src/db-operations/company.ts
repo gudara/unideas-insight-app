@@ -96,5 +96,5 @@ export async function get( id: number) {
 }
 
 export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: Company[], error?: string | null }> {
-  return comonSearchByTabelStateData('company', columnFilters, sorting, pagination)
+  return comonSearchByTabelStateData('company', columnFilters, sorting, pagination, undefined)
 }
