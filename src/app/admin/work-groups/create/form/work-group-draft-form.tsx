@@ -91,7 +91,7 @@ export const WorkGroupDraftForm: React.FC<Props> = ({ workGroup }) => {
                                     <Input placeholder="" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    Select an icon from <a className="underline text-blue-500" href="https://lucide.dev/icons/ " target="new">Lucide Icons</a>  and enter its name using Title Case. For example, if you choose the "file-user" icon, enter it as FileUser.
+                                    Select an icon from <a className="underline text-blue-500" href="https://lucide.dev/icons/ " target="new">Lucide Icons</a>  and enter its name using Title Case. For example, if you choose the &ldquo;file-user&ldquo; icon, enter it as FileUser.
                                 </FormDescription>
                                 <FormMessage>
                                     {state?.errors?.description && <span>{state.errors.icon}</span>}
