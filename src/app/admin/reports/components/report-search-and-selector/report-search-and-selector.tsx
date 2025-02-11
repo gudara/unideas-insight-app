@@ -3,15 +3,15 @@ import RsasFilters from "./rsas-filters";
 import { AdvanceColumnFilter } from "@/lib/interfaces/data-table-interfaces";
 
 interface ReportSearchAndSelectorProps {
-    selectedReports?: Report[];
-    reportList: Report[];
+    selectedList?: Report[];
+    list: Report[];
     onFiltersChange: (filters: AdvanceColumnFilter[]) => void;
 }
 
 export const ReportSearchAndSelector: React.FC<ReportSearchAndSelectorProps> = (
     { 
-        selectedReports, 
-        reportList,
+        selectedList: selectedReports, 
+        list: reportList,
         onFiltersChange
     }
 ) => {

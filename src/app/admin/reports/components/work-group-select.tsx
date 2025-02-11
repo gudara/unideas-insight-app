@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect, FocusEvent, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
     Command,
     CommandEmpty,
     CommandGroup,
     CommandInput,
     CommandItem,
-    CommandSeparator,
 } from "@/components/ui/command";
 import {
     Popover,
@@ -20,8 +19,8 @@ import { WorkGroup } from "@/lib/interfaces/work-group-interface";
 import { DataTableFilter } from "@/lib/interfaces/data-table-interfaces";
 import { search } from '@/db-operations/work-group'
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 import { WorkGroupStatus } from "@prisma/client";
+import DynamicIcon from "@/components/dynamic-icon";
 
 export function WorkGroupSelect({
     onSelect,
@@ -76,10 +75,13 @@ export function WorkGroupSelect({
                         )}
                         disabled={disabled}
                     >
-                        <>
+                        <div className="flex flex-row justify-start">
+                            {selectedWorkGroup ? <DynamicIcon iconName={selectedWorkGroup?.icon as any} size={14} className="mr-1" />  : ''}
                             {selectedWorkGroup ? selectedWorkGroup.name : <span className="text-muted-foreground">Select a work group</span>}
+                        </div>
+                        <div>
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </>
+                        </div>
                     </Button>
 
                 </PopoverTrigger>
@@ -108,6 +110,7 @@ export function WorkGroupSelect({
                                             : "opacity-0"
                                             }`}
                                     />
+                                    <DynamicIcon iconName={workgroup.icon as any} size={14} />
                                     {workgroup.name}
                                 </CommandItem>
                             ))}

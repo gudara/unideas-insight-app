@@ -7,10 +7,11 @@ type IconName = keyof typeof import('lucide-react');
 interface DynamicIconProps {
   iconName: IconName;
   size: number;
+  className?: string;
 }
 
 // Dynamically import Lucide icons based on the icon name
-const DynamicIcon:  FC<DynamicIconProps> = ({ iconName, size }: DynamicIconProps) => {
+const DynamicIcon:  FC<DynamicIconProps> = ({ iconName, size, className }: DynamicIconProps) => {
   const [IconComponent, setIconComponent] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const iconStyle = {
@@ -53,7 +54,7 @@ const DynamicIcon:  FC<DynamicIconProps> = ({ iconName, size }: DynamicIconProps
     return <div>Icon not found</div>; 
   }
 
-  return <IconComponent />;
+  return <IconComponent className={className} />;
 };
 
 export default DynamicIcon;

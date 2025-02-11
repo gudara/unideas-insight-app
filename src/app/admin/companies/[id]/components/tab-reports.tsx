@@ -25,7 +25,7 @@ export const TabReports: React.FC<TabReportsProps> = ({ company }) => {
                 <AssignReportToCompany company={company}></AssignReportToCompany>
             </div>
             <div className="w-full">
-                <ReportSearchAndSelector onFiltersChange={(filters=> changeFilters(filters))} reportList={[]} />
+                <ReportSearchAndSelector onFiltersChange={(filters=> changeFilters(filters))} list={[]} />
             </div>
         </>
     )

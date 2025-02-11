@@ -4,6 +4,7 @@ import { BaseInterface } from "./base-interface";
 export interface WorkGroup extends BaseInterface {
     id: number;
     name: string;
+    icon: string;
     status: WorkGroupStatus;
 }
 

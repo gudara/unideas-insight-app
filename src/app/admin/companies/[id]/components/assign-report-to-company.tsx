@@ -24,9 +24,8 @@ export const AssignReportToCompany: React.FC<AssignReportToCompanyProps> = ({ co
 
     return (
         <>
-            <ReportSearchAndSelector selectedReports={[]} reportList={[]} onFiltersChange={(filters) => { }} />
-
-
+            <Button><FilePlus2 /> Assign Reports</Button>
+            <ReportSearchAndSelector selectedList={[]} list={[]} onFiltersChange={(filters) => { }} />
         </>
     )
 }
