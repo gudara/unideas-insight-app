@@ -61,10 +61,10 @@ export function WorkGroupSelect({
 
     return (
         <>
-
-            <Popover open={open} onOpenChange={setOpen}>
+            <Popover open={open} onOpenChange={setOpen} >
                 <PopoverTrigger asChild>
                     <Button
+                        onPointerDown={(e) => e.stopPropagation()}
                         variant="outline"
                         role="combobox"
                         size="default"
@@ -76,7 +76,7 @@ export function WorkGroupSelect({
                         disabled={disabled}
                     >
                         <div className="flex flex-row justify-start">
-                            {selectedWorkGroup ? <DynamicIcon iconName={selectedWorkGroup?.icon as any} size={14} className="mr-1" />  : ''}
+                            {selectedWorkGroup ? <DynamicIcon iconName={selectedWorkGroup?.icon as any} size={14} className="mr-1" /> : ''}
                             {selectedWorkGroup ? selectedWorkGroup.name : <span className="text-muted-foreground">Select a work group</span>}
                         </div>
                         <div>
@@ -85,13 +85,17 @@ export function WorkGroupSelect({
                     </Button>
 
                 </PopoverTrigger>
-                <PopoverContent className="w-full p-0">
-                    <Command className="w-full">
-                        <CommandInput
+                <PopoverContent className="w-full p-0 z-[1000] pointer-events-auto">
+                    <Command className="w-full [&>*]:pointer-events-auto">
+                        {/* <CommandInput
+                            onFocus={(e) => e.stopPropagation()}
                             placeholder="Search workgroup"
                             value={searchString}
                             onValueChange={setSearchString}
-                        />
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onKeyDown={(e) => e.stopPropagation()}
+                            className="focus-visible:ring-0"
+                        /> */}
                         <CommandEmpty>No workgroup found.</CommandEmpty>
                         <CommandGroup>
                             {workgroups.map((workgroup) => (

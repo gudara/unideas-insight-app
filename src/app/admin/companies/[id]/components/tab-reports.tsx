@@ -22,10 +22,10 @@ export const TabReports: React.FC<TabReportsProps> = ({ company }) => {
     return (
         <>
             <div className="w-full">
-                <AssignReportToCompany company={company}></AssignReportToCompany>
+                <AssignReportToCompany company={company} selectedList={[]}></AssignReportToCompany>
             </div>
             <div className="w-full">
-                <ReportSearchAndSelector onFiltersChange={(filters=> changeFilters(filters))} list={[]} />
+                <ReportSearchAndSelector onFiltersChange={(filters => changeFilters(filters))} list={[]} />
             </div>
         </>
     )

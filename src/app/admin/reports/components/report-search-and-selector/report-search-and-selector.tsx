@@ -15,6 +15,7 @@ export const ReportSearchAndSelector: React.FC<ReportSearchAndSelectorProps> = (
         onFiltersChange
     }
 ) => {
+    
 
     function changeFilters(filters: AdvanceColumnFilter[]): void {
         onFiltersChange(filters)

@@ -50,9 +50,7 @@ export function DataTableReports<TData, TValue>({
           return {...r, workGroupName: r.workGroup.name}
         })}
         : { total: 0, data: [], error: null };
-
     },
-
   })
 
   const table = useReactTable<Report>({

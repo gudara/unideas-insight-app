@@ -4,4 +4,6 @@ export interface BaseInterface {
     lastUpdated?: Date;
     createdBy?: string;
     lastUpdatedBy?: string | null;
+    isSelected?: boolean;
+    isLoading?: boolean;
 }

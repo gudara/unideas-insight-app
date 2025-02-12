@@ -1,8 +1,9 @@
 'use server'
-import prisma, { errorHandler, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
+import prisma, { errorHandler, comonSearchByTabelStateData, commonGet, commonGetAll } from '@/lib/prisma-common-utils';
 import { DataTableFilter } from '@/lib/interfaces/data-table-interfaces';
 import { CreateReportFormData } from '@/lib/interfaces/report-interface';
 import { Report } from '@/lib/interfaces/report-interface';
+import { ReportStatus } from '@prisma/client';
 
 export async function create(data: CreateReportFormData, user: any) {
 
@@ -234,4 +235,11 @@ export async function get(id: number) {
 
 export async function search({ sorting, columnFilters, pagination, joinSchemas }: DataTableFilter): Promise<{ total: number, data: Report[], error?: string | null }> {
     return comonSearchByTabelStateData('report', columnFilters, sorting, pagination, joinSchemas)
+}
+
+export async function getAllEnabled(): Promise<Report[] | any>  {
+    let data = await comonSearchByTabelStateData('report', [{id: 'status', value: ReportStatus.Enable, condition: 'equal'}], [], undefined, undefined);
+    if(data.data?.length)
+        return data.data;
+    return [];
 }

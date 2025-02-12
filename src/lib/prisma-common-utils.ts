@@ -34,6 +34,17 @@ export async function commonGet(modelName: ModelNames, id: number): Promise<Comp
   }
 }
 
+// export async function commonGetAll(modelName: ModelNames): Promise<any[] | any> {
+//   try {
+//     const model = prisma[modelName] as any;
+//     return await model.findMany();
+//   } catch (error) {
+//     return errorHandler(error).error
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// }
+
 export async function commonSearch(
   modelName: ModelNames,
   skip: number,
