@@ -5,7 +5,6 @@ import {
     Command,
     CommandEmpty,
     CommandGroup,
-    CommandInput,
     CommandItem,
 } from "@/components/ui/command";
 import {
@@ -24,15 +23,14 @@ import DynamicIcon from "@/components/dynamic-icon";
 
 export function WorkGroupSelect({
     onSelect,
-    selectedId,
     disabled,
+    selectedId
 }: {
     onSelect: (workgroup: WorkGroup) => void;
-    selectedId?: number | null;
     disabled?: boolean;
+    selectedId?: number | null | undefined;
 }) {
     const [open, setOpen] = useState(false);
-    const [searchString, setSearchString] = useState("");
     const [workgroups, setWorkgroups] = useState<WorkGroup[]>([]);
     const [selectedWorkGroup, setSelectedWorkgroup] = useState<WorkGroup | null>(null);
 
@@ -41,23 +39,24 @@ export function WorkGroupSelect({
         const fetchWorkgroups = async () => {
             const filters: DataTableFilter = {
                 sorting: [{ id: 'name', desc: false }],
-                columnFilters: [{ id: 'status', value: WorkGroupStatus.Enable, condition: 'equal' }, { id: 'name', value: searchString }],
+                columnFilters: [{ id: 'status', value: WorkGroupStatus.Enable, condition: 'equal' }],
                 pagination: { pageIndex: 0, pageSize: 200 }
             }
             const wgSearch = await search(filters)
             setWorkgroups(wgSearch.data);
         };
         fetchWorkgroups();
-    }, [searchString]);
+    }, []);
 
-    useEffect(() => {
-        if (selectedId && selectedId !== selectedWorkGroup?.id) {
-            const selected = workgroups.find((wg) => wg.id === selectedId);
-            if (selected) setSelectedWorkgroup(selected);
+    useEffect(() =>{
+        if(selectedId && workgroups.length){
+            const sel = workgroups.find(a=> a.id === selectedId);
+            setSelectedWorkgroup(sel ? sel : null)
         }
-    }, [selectedId, workgroups, selectedWorkGroup?.id]);
-
-
+        else{
+            setSelectedWorkgroup(null)   
+        }
+    }, [workgroups, selectedId])
 
     return (
         <>

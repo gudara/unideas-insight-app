@@ -1,7 +1,9 @@
 'use server'
-import prisma, {  errorHandler, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
+import prisma, { errorHandler, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
 import { Company, CreateCompanyFormData } from "@/lib/interfaces/company-interfaces";
+import { Report } from "@/lib/interfaces/report-interface";
 import { DataTableFilter } from '@/lib/interfaces/data-table-interfaces';
+
 
 export async function create(data: CreateCompanyFormData, user: any) {
 
@@ -91,10 +93,97 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
   }
 }
 
-export async function get( id: number) {
+export async function get(id: number) {
   return commonGet('company', id)
 }
 
 export async function search({ sorting, columnFilters, pagination }: DataTableFilter): Promise<{ total: number, data: Company[], error?: string | null }> {
   return comonSearchByTabelStateData('company', columnFilters, sorting, pagination, undefined)
+}
+
+export async function assignReports(companyId: number, reports: Report[]): Promise<{data: Company | null, error: string | null}> {
+  const companyCk = await prisma.company.findUnique({
+    where: {
+      id: companyId,
+    },
+  });
+  if (!companyCk) {
+    return {
+      error: "The company not exists",
+      data: null
+    }
+  }
+
+  try {
+    const company = await prisma.company.update({
+      where: { id: companyId },
+      data: {
+        reports: { connect: reports.map(r => { return { id: r?.id } }) }
+      },
+      include: { reports: true }
+    });
+    return {
+      data: company,
+      error: null
+    }
+  } catch (error) {
+    const er =  errorHandler(error);
+    return { ...er, data: null}
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function removeReports(companyId: number, reports: Report[]): Promise<{data: Company | null, error: string | null}> {
+  const companyCk = await prisma.company.findUnique({
+    where: {
+      id: companyId,
+    },
+  });
+  if (!companyCk) {
+    return {
+      error: "The company not exists",
+      data: null
+    }
+  }
+
+  try {
+    const company = await prisma.company.update({
+      where: { id: companyId },
+      data: {
+        reports: { disconnect: reports.map(r => { return { id: r?.id } }) }
+      },
+      include: { reports: true }
+    });
+    return {
+      data: company,
+      error: null
+    }
+  } catch (error) {
+    const er =  errorHandler(error);
+    return { ...er, data: null}
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function getCompanyWithReports(companyId: number): Promise<{data?: Company | undefined, error?: string}>{
+
+  try {
+    const company = await prisma.company.findUnique({
+      where: { id: companyId },
+      include: {
+        reports: true // Include all related reports,
+        
+      }
+    });
+    return {
+      data: company ?? undefined,
+      error: undefined
+    }
+  } catch (error) {
+    return errorHandler(error)
+  } finally {
+    await prisma.$disconnect();
+  }
 }

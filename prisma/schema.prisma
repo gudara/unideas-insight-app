@@ -47,6 +47,7 @@ model Company {
   status            CompanyStatus @default(Enable)
 
   Divisions Division[]
+  reports     Report[]
 }
 
 model Division {
@@ -74,6 +75,7 @@ model WorkGroup {
   createdBy     String?          @db.VarChar(50)
   lastUpdatedBy String?          @db.VarChar(50)
   status        WorkGroupStatus? @default(Enable)
+  
   Reports       Report[]
 }
 
@@ -90,4 +92,6 @@ model Report {
   status        ReportStatus @default(Enable)
   workGroup     WorkGroup    @relation(fields: [workGroupId], references: [id])
   workGroupId   Int
+
+  companies   Company[]
 }

@@ -5,7 +5,7 @@ import { Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DtReportsAddNewButton } from "./dt-reports-add-new-button"
-import { ReportStatusSelector } from "../../components/report-status-selector"
+import { ReportStatusSelector } from "../../components/report-filters/report-status-selector"
 
 interface DtReportsToolbarProps<TData> {
   table: Table<TData>

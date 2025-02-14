@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { reportCreateFormSchema } from "../../zod-schemas";
-import { WorkGroupSelect } from "../../components/work-group-select";
+import { WorkGroupSelect } from "../../components/report-filters/work-group-select";
 import { WorkGroup } from "@/lib/interfaces/work-group-interface";
 
 type Props = {

@@ -1,15 +1,17 @@
 import { CompanyStatus } from '@prisma/client';
 import { BaseInterface } from './base-interface';
+import { Report } from './report-interface';
 
 
 export interface Company extends BaseInterface {
     id: number;
     name: string;
     contactPersonName: string;
-    address?: string ;
+    address?: string | null;
     contactNumber?: string | null;
     contactEmail?: string | null;
     status: CompanyStatus;
+    reports?: Report[] | null;
 }
 
 export interface CreateCompanyFormData {

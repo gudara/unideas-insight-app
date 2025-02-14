@@ -7,7 +7,7 @@ import { Check, PlusCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command"
-import { reportStatuses } from "../table-reports/report-meta-data"
+import { reportStatuses } from "../../table-reports/report-meta-data"
 
 
 interface ReportStatusSelectorProps<TData, TValue> {

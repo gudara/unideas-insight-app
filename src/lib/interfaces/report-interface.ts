@@ -5,11 +5,11 @@ import { BaseInterface } from './base-interface';
 export interface Report extends BaseInterface {
     id: number;
     name: string;
-    description?: string;
+    description?: string | null;
     reportId: string ;
     workspaceId: string;
     status: ReportStatus;
-    workGroup: WorkGroup;
+    workGroup?: WorkGroup;
     workGroupId: number;
     workGroupName?: string;
 }
