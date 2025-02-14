@@ -24,6 +24,7 @@ export const ListReports: React.FC<ListReportsProps> = ({ list, onSelectTrigger 
     return <>
         <ScrollArea className="h-full w-full content-center rounded border">
             <div className="flex flex-col justify-around">
+                { (!isLoading  && list.length === 0) && <span className="text-muted-foreground text-center"> No reports found </span> }
                 {
                     !isLoading &&
                     list?.map((item) => (

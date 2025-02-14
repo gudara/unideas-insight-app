@@ -1,7 +1,5 @@
 'use server';
 
-import { revalidatePath, revalidateTag } from 'next/cache';
-
 import { Report } from '@/lib/interfaces/report-interface';
 import { assignReports, removeReports } from '@/db-operations/company';
 import { Company } from '@/lib/interfaces/company-interfaces';
