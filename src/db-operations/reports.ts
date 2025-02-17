@@ -1,5 +1,5 @@
 'use server'
-import prisma, { errorHandler, comonSearchByTabelStateData, commonGet, commonGetAll } from '@/lib/prisma-common-utils';
+import prisma, { errorHandler, comonSearchByTabelStateData, commonGet } from '@/lib/prisma-common-utils';
 import { DataTableFilter } from '@/lib/interfaces/data-table-interfaces';
 import { CreateReportFormData } from '@/lib/interfaces/report-interface';
 import { Report } from '@/lib/interfaces/report-interface';
