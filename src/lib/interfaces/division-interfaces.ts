@@ -1,6 +1,7 @@
 import { DivisionStatus } from "@prisma/client";
 import { BaseInterface } from "./base-interface";
 import { Company } from "./company-interfaces";
+import { Report } from "./report-interface";
 
 export interface Division extends BaseInterface {
     id: number;
@@ -11,7 +12,8 @@ export interface Division extends BaseInterface {
     contactNumber?: string | null;
     contactEmail?: string | null;
     status: DivisionStatus;
-    company?: Company
+    company?: Company;
+    reports: Report[] | null;
 }
 
 export interface CreateDivisionFormData {

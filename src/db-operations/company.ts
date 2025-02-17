@@ -93,7 +93,7 @@ export async function update(id: number, data: CreateCompanyFormData, user: any)
   }
 }
 
-export async function get(id: number) {
+export async function get(id: number): Promise<Company> {
   return commonGet('company', id)
 }
 

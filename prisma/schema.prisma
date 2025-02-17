@@ -64,6 +64,8 @@ model Division {
   createdBy         String         @db.VarChar(50)
   lastUpdatedBy     String?        @db.VarChar(50)
   status            DivisionStatus @default(Enable)
+
+  reports Report[]
 }
 
 model WorkGroup {
@@ -76,7 +78,7 @@ model WorkGroup {
   lastUpdatedBy String?          @db.VarChar(50)
   status        WorkGroupStatus? @default(Enable)
   
-  Reports       Report[]
+  reports       Report[]
 }
 
 model Report {
@@ -94,4 +96,5 @@ model Report {
   workGroupId   Int
 
   companies   Company[]
+  divisions   Division[]
 }

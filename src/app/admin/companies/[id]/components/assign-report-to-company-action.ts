@@ -14,10 +14,3 @@ export async function updateReports(companyId: number, isAssign: boolean, items:
         return removeReports(companyId, items )
     }
 }
-
-
-
-
-
-
-

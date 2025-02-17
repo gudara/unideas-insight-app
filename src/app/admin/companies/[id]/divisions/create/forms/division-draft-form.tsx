@@ -43,7 +43,6 @@ export const DivisionDraftForm: React.FC<Props> = ({ company, division }) => {
         async (previous: undefined | StateType , payload: FormData) => {
             let result;
             if (!!company) {
-                console.log("-------------------------------", previous?.data)
                 if (!!previous?.data?.id) {
                     result = await updateDivision(company, previous.data.id, payload)
                 }
@@ -56,7 +55,7 @@ export const DivisionDraftForm: React.FC<Props> = ({ company, division }) => {
                         title: "Done",
                         description: "Successfully Saved.",
                     });
-                    router.push(`/admin/companies/${result.data.companyId}`);
+                    router.push(`/admin/companies/${result.data.companyId}?tab=2`);
                 }
             }
             else {
