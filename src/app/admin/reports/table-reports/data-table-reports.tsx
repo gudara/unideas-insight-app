@@ -47,7 +47,7 @@ export function DataTableReports<TData, TValue>({
       const d = await search({ sorting, columnFilters, pagination, joinSchemas })
       return d?.data?.length
         ? {...d, data: d.data?.map(r=> {
-          return {...r, workGroupName: r.workGroup.name}
+          return {...r, workGroupName: r.workGroup?.name}
         })}
         : { total: 0, data: [], error: null };
     },
