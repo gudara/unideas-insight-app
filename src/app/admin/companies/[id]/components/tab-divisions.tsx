@@ -4,7 +4,7 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/componen
 import { Company } from "@/lib/interfaces/company-interfaces";
 import { Separator } from "@radix-ui/react-separator";
 import { Search } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { DivisionAddNewButton } from "./division-add-new-button";
 import { DivisionList } from "./division-list";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,7 @@ interface TabDivisionsProps {
 }
 
 export const TabDivisions: React.FC<TabDivisionsProps> = ({ company }) => {
-
+  const [searchString, setSearchString ] = useState('')
 
     return (
         <>
@@ -35,11 +35,11 @@ export const TabDivisions: React.FC<TabDivisionsProps> = ({ company }) => {
                       <form>
                         <div className="relative">
                           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                          <Input placeholder="Search" className="pl-8" />
+                          <Input placeholder="Search" className="pl-8" value={searchString} onChange={(e)=> setSearchString(e.target.value)} />
                         </div>
                       </form>
                     </div>
-                    <DivisionList company={company} />
+                    <DivisionList company={company} searchString={searchString} />
                   </div>
                 </ResizablePanel>
                 <ResizableHandle withHandle />

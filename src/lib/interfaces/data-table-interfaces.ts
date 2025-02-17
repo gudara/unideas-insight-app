@@ -8,5 +8,5 @@ export interface DataTableFilter {
 }
 
 export interface AdvanceColumnFilter extends ColumnFilter{
-    condition?: 'equal' | 'contains' | 'in'
+    condition?: 'equal' | 'contains' | 'in' | 'equal-number'
 }

@@ -55,10 +55,10 @@ export async function commonSearch(
 ): Promise<{ total: number, data: any[], error?: string | null }> {
   const model = prisma[modelName] as any;
   try {
+    // console.log(where, orderBy)
     // if ('count' in model && 'findMany' in model) {
     const total = await model.count({
-      where: where ?? {},
-      orderBy: orderBy ?? {}
+      where: where ?? {}
     });
     const data = await model.findMany({
       skip: skip ?? 0,
@@ -91,6 +91,9 @@ export function generateWhereByRQColumnFiltersState(columnFilters: AdvanceColumn
     if (typeof item.value === 'string' || typeof item.value === 'number') {
       if (item.condition === 'equal') {
         whereString = ` ${whereString} "${item.id}" : { "equals" : "${item.value}" },`;
+      }
+      else if (item.condition === 'equal-number') {
+        whereString = ` ${whereString} "${item.id}" : { "equals" : ${item.value} },`;
       }
       else { // default condition
         whereString = ` ${whereString} "${item.id}" : { "contains" : "${item.value}", "mode": "insensitive" },`;
@@ -153,13 +156,13 @@ export function errorHandler(error: any): { error: string } {
     }
   } else if (error instanceof PrismaClientValidationError) {
     // Handle validation errors (such as missing required fields)
-    // console.error('Validation error occurred:', error.message);
+    // console.log('1Validation error occurred:', error.message);
     return {
       error: `Validation error occurred: ${error.message}`
     }
   } else {
     // Catch any other error
-    // console.error('Unexpected error occurred:', error);
+    // console.log('2Unexpected error occurred:', error);
     return {
       error: `Validation error occurred: ${error}`
     }
@@ -180,7 +183,7 @@ export function comonSearchByTabelStateData(
   //pagination  convert to skip and take by
   const { skip, take } = generateLimitByRQPaginationState(pagination)
   const joinObj = generateJoinByRQJoinStringArray(joinSchemas);
-  // console.log("++++++++++++", joinObj)
+  // console.log("++++++++++++", where)
   return commonSearch(modelName, skip, take, where, orderBy, joinObj)
 }
 

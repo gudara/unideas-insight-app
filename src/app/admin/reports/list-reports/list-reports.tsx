@@ -83,14 +83,16 @@ export const ListReports: React.FC<ListReportsProps> = ({ list, onSelectTrigger 
                             )}
                         >
                             <div className="flex flex-row">
-                                <div className="justify-start w-12 content-center">
-
-                                </div>
+                                {
+                                    enableClickAction &&
+                                    <div className="justify-start w-12 content-center">
+                                    </div>
+                                }
                                 <div className="justify-normal">
                                     <div className="flex w-full flex-col gap-0">
                                         <div className="flex items-center">
                                             <div className="flex items-center gap-2">
-                                                <Skeleton className="h-4 w-[250px] my-2" />
+                                                <Skeleton className="h-3 w-[250px] my-2" />
                                             </div>
                                             <div
                                                 className={cn(
@@ -103,7 +105,7 @@ export const ListReports: React.FC<ListReportsProps> = ({ list, onSelectTrigger 
                                         </div>
                                     </div>
                                     <div className="line-clamp-2 text-xs text-muted-foreground">
-                                        <Skeleton className="h-3 w-[400px]" />
+                                        <Skeleton className="h-2 w-[400px]" />
                                     </div>
                                 </div>
                             </div>
