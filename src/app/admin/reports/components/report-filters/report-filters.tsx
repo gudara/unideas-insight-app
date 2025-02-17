@@ -28,7 +28,7 @@ export default function ReportFilters({
         if (wgFilter) filters.push({ id: "workGroupId", value: !!wgFilter ? +wgFilter.id : null, condition: 'equal' } as AdvanceColumnFilter);
         if (stetusFilter) filters.push(stetusFilter);
         onFiltersChange(filters)
-    }, [nameFilter, wgFilter, stetusFilter]);
+    }, [nameFilter, wgFilter, stetusFilter, onFiltersChange]);
 
     const clearFilters = ()=>{
         setNameFilter('');

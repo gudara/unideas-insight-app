@@ -238,7 +238,7 @@ export async function search({ sorting, columnFilters, pagination, joinSchemas }
 }
 
 export async function getAllEnabled(): Promise<Report[] | any>  {
-    let data = await comonSearchByTabelStateData('report', [{id: 'status', value: ReportStatus.Enable, condition: 'equal'}], [], undefined, undefined);
+    const data = await comonSearchByTabelStateData('report', [{id: 'status', value: ReportStatus.Enable, condition: 'equal'}], [], undefined, undefined);
     if(data.data?.length)
         return data.data;
     return [];
