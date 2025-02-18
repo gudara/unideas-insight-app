@@ -115,7 +115,11 @@ export async function getDivisionWithReports(divisionId: number): Promise<{data?
       const division = await prisma.division.findUnique({
         where: { id: divisionId },
         include: {
-          reports: true // Include all related reports,
+          reports: {
+            include: {
+              workGroup: true
+            }
+          }
         }
       });
       return {

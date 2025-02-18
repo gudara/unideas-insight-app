@@ -1,3 +1,4 @@
+import DynamicIcon from "@/components/dynamic-icon";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Report } from "@/lib/interfaces/report-interface";
@@ -14,7 +15,7 @@ interface ListReportsProps {
     onSelectTrigger?: (isSelected: boolean, selected: Report) => void
 }
 
-export const ListReports: React.FC<ListReportsProps> = ({ list, onSelectTrigger = ()=>{}, isLoading, selectedIdList, enableClickAction = true }) => {
+export const ListReports: React.FC<ListReportsProps> = ({ list, onSelectTrigger = () => { }, isLoading, selectedIdList, enableClickAction = true }) => {
     const [loadingId, setLoadingId] = useState<number | null>(null);
 
     useEffect(() => {
@@ -22,16 +23,16 @@ export const ListReports: React.FC<ListReportsProps> = ({ list, onSelectTrigger 
     }, [list, selectedIdList])
 
     return <>
-        <ScrollArea className="h-full w-full content-center rounded border">
-            <div className="flex flex-col justify-around">
-                { (!isLoading  && list.length === 0) && <span className="text-muted-foreground text-center"> No reports found </span> }
+        <ScrollArea className="h-full w-full content-start rounded border min-h-[400px]">
+            <div className="flex flex-col">
+                {(!isLoading && list.length === 0) && <span className="text-muted-foreground text-center"> No reports found </span>}
                 {
                     !isLoading &&
                     list?.map((item) => (
                         <button
                             key={item.id}
                             className={cn(
-                                "flex flex-col items-start gap-0 border-b px-4 py-2 text-left text-sm transition-all hover:bg-accent"
+                                "content-start border-b px-4 py-2 text-left text-sm hover:bg-accent"
                             )}
                             onClick={() => {
                                 if (enableClickAction) {
@@ -53,7 +54,12 @@ export const ListReports: React.FC<ListReportsProps> = ({ list, onSelectTrigger 
                                     <div className="flex w-full flex-col gap-0">
                                         <div className="flex items-center">
                                             <div className="flex items-center gap-2">
-                                                <div className="font-semibold">{item.name}</div>
+                                                {
+                                                    !!item.workGroup?.icon &&
+                                                    <DynamicIcon iconName={item.workGroup.icon as keyof typeof import('lucide-react')} size={0} className="text-muted-foreground text-sm"></DynamicIcon>
+                                                }
+                                                {item.workGroup?.name} / <div className="font-semibold">{item.name}</div>
+
                                             </div>
                                             <div
                                                 className={cn(

@@ -60,7 +60,7 @@ export const AssignReportToCompany: React.FC<AssignReportToCompanyProps> = ({ co
                         <DrawerTitle>Assign Reports</DrawerTitle>
                         <DrawerDescription>Select Reports to assign to the company.</DrawerDescription>
                     </DrawerHeader>
-                    <div className="p-4 pb-0 w-full">
+                    <div className="p-4 pb-0 w-full h-4/5">
                         <div className="flex flex-col w-full content-center justify-center">
                             <div>
                                 <ReportFilters onFiltersChange={(filters) => setAdvanceFilters(filters)} ></ReportFilters>

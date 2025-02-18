@@ -173,8 +173,11 @@ export async function getCompanyWithReports(companyId: number): Promise<{data?: 
     const company = await prisma.company.findUnique({
       where: { id: companyId },
       include: {
-        reports: true // Include all related reports,
-        
+        reports: {
+          include: {
+            workGroup: true
+          }
+        }
       }
     });
     return {
