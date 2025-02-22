@@ -5,8 +5,6 @@
         "node_modules{,/**}",
         ".vscode{,/**}"
     ],
-    "appService.defaultWebAppToDeploy": "",
-    "appService.deploySubpath": ".",
-    "azureAppService.deploySubpath": ".",
-    "azureAppService.preDeployTask": "npm install --production"
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/c6626f83-eaa1-4266-8851-a23699a394a9/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/unleash-test-app-3",
+    "appService.deploySubpath": "."
 }

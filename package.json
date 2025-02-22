@@ -5,9 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node server.js",
-    "lint": "next lint",
-    "postinstall": "prisma generate"
+    "start": "next start",
+    "lint": "next lint"
   },
   "engines": {
     "node": "20.x"
