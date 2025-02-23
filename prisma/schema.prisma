@@ -46,7 +46,7 @@ model Company {
   lastUpdatedBy     String?       @db.VarChar(50)
   status            CompanyStatus @default(Enable)
 
-  Divisions Division[]
+  division Division[]
   reports     Report[]
 }
 
