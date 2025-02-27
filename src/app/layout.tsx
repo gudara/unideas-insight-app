@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Head from "next/head";
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const queryClient = new QueryClient();
-  // const queryClient = new QueryClient()
   return (
     <html lang="en" suppressHydrationWarning>
       <Head>
@@ -41,28 +41,30 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <QueryClientProvider client={queryClient}>
-            <SidebarProvider >
-              <AppSidebar />
-              <SidebarInset>
-                <main>
-                  <div className="">
-                    {children}
-                    <Toaster />
-                  </div>
-                </main>
-              </SidebarInset>
+        <SessionProvider>
 
-            </SidebarProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <QueryClientProvider client={queryClient}>
+              <SidebarProvider >
+                <AppSidebar />
+                <SidebarInset>
+                  <main>
+                    <div className="">
+                      {children}
+                      <Toaster />
+                    </div>
+                  </main>
+                </SidebarInset>
 
+              </SidebarProvider>
+            </QueryClientProvider>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
